@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SinoHerb | 我的体质</title>
+    <meta name="description" content="SinoHerb 问卷式自测，先给出最接近的体质判断。" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="announcement">
+        <p>先测体质，再推荐产品 · 目前使用本地问卷规则，后续可接入大模型</p>
+        <a href="./products.html">先看产品</a>
+      </div>
+
+      <header class="site-header">
+        <a class="brand" href="./index.html" aria-label="SinoHerb 首页">
+          <span class="brand-mark">S</span>
+          <span class="brand-copy">
+            <strong>SinoHerb</strong>
+            <span>TCM wellness for overseas users</span>
+          </span>
+        </a>
+
+        <nav class="site-nav" aria-label="主导航">
+          <a href="./index.html">首页</a>
+          <a href="./products.html">产品</a>
+          <a href="./philosophy.html">理念</a>
+          <a href="./my-constitution.html">我的体质</a>
+          <a href="./about.html">关于我们</a>
+          <a class="cart-button" href="./cart.html">
+            <span>Cart</span>
+            <span class="cart-button__badge">3</span>
+          </a>
+        </nav>
+      </header>
+
+      <main class="page-main">
+        <section class="page-hero">
+          <div class="page-hero__panel page-hero__panel--soft">
+            <span class="eyebrow">我的体质</span>
+            <h1>问卷式自测，先给一个最接近的体质结果。</h1>
+            <p class="lead">
+              现在使用本地规则判断，之后可以无缝替换成大模型判定。
+              先把体质、解释、推荐方案和下一步购买入口理清楚。
+            </p>
+            <div class="hero__actions">
+              <a class="button button--primary" href="#quiz">开始填写</a>
+              <a class="button button--ghost" href="./products.html">先看产品</a>
+            </div>
+          </div>
+
+          <div class="page-hero__panel">
+            <div class="result-card">
+              <span class="result-card__label">结果预览</span>
+              <div class="result-card__panel">
+                <p class="result-card__type">等待你完成问卷。</p>
+                <h3>系统会先给你一个最接近的体质判断。</h3>
+                <p class="result-card__summary">
+                  这里以后可以直接接大模型，输出体质类型、解释、推荐方案和下一步购买入口。
+                </p>
+                <div class="result-card__chips">
+                  <span>饮食产品</span>
+                  <span>泡脚产品</span>
+                  <span>体验类产品</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card" id="quiz">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">QUESTIONNAIRE</span>
+              <h2>5 个问题，先找最接近的体质。</h2>
+            </div>
+            <p>问题不复杂，目的是让海外用户快速完成一次自测。</p>
+          </div>
+
+          <div class="quiz-layout">
+            <form class="quiz-card" id="constitutionQuiz">
+              <div class="quiz-card__head">
+                <span>Questionnaire</span>
+                <span>5 questions</span>
+              </div>
+
+              <fieldset class="quiz-question">
+                <legend>1. 最近最像你的状态是？</legend>
+                <label><input type="radio" name="q1" value="liver" /> 容易焦虑、胸口发紧</label>
+                <label><input type="radio" name="q1" value="sleep" /> 睡浅、多梦、醒得早</label>
+                <label><input type="radio" name="q1" value="damp" /> 身体沉重、口黏、发困</label>
+                <label><input type="radio" name="q1" value="qi" /> 怕冷、容易乏力</label>
+                <label><input type="radio" name="q1" value="stagnation" /> 胀气、总觉得堵</label>
+              </fieldset>
+
+              <fieldset class="quiz-question">
+                <legend>2. 睡眠更接近哪一种？</legend>
+                <label><input type="radio" name="q2" value="sleep" /> 梦多、浅眠、脑子停不下来</label>
+                <label><input type="radio" name="q2" value="liver" /> 一到晚上就更心烦</label>
+                <label><input type="radio" name="q2" value="damp" /> 睡得久，但醒来还是重</label>
+                <label><input type="radio" name="q2" value="qi" /> 很早醒，醒后特别累</label>
+                <label><input type="radio" name="q2" value="stagnation" /> 翻来覆去，总不放松</label>
+              </fieldset>
+
+              <fieldset class="quiz-question">
+                <legend>3. 吃完饭后更容易出现什么？</legend>
+                <label><input type="radio" name="q3" value="stagnation" /> 胀气、消化拖沓</label>
+                <label><input type="radio" name="q3" value="damp" /> 油腻、厚重、发困</label>
+                <label><input type="radio" name="q3" value="qi" /> 胃口小、吃一点就累</label>
+                <label><input type="radio" name="q3" value="liver" /> 情绪波动明显</label>
+                <label><input type="radio" name="q3" value="sleep" /> 晚上更容易乱想</label>
+              </fieldset>
+
+              <fieldset class="quiz-question">
+                <legend>4. 你最想改善的是？</legend>
+                <label><input type="radio" name="q4" value="liver" /> 情绪紧、焦虑感</label>
+                <label><input type="radio" name="q4" value="sleep" /> 睡眠质量</label>
+                <label><input type="radio" name="q4" value="damp" /> 身体湿重感</label>
+                <label><input type="radio" name="q4" value="qi" /> 体力和耐力</label>
+                <label><input type="radio" name="q4" value="stagnation" /> 总觉得堵住了</label>
+              </fieldset>
+
+              <fieldset class="quiz-question">
+                <legend>5. 你更喜欢哪种支持方式？</legend>
+                <label><input type="radio" name="q5" value="liver" /> 舒缓型饮食</label>
+                <label><input type="radio" name="q5" value="sleep" /> 睡前放松仪式</label>
+                <label><input type="radio" name="q5" value="damp" /> 泡脚与热感护理</label>
+                <label><input type="radio" name="q5" value="qi" /> 温补型支持</label>
+                <label><input type="radio" name="q5" value="stagnation" /> 顺气与轻运动</label>
+              </fieldset>
+
+              <div class="quiz-card__actions">
+                <button class="button button--primary" type="submit">查看结果</button>
+                <button class="button button--ghost" type="reset">重新填写</button>
+              </div>
+            </form>
+
+            <aside class="result-card" id="quizResult" aria-live="polite">
+              <span class="result-card__label">结果预览</span>
+              <div class="result-card__panel">
+                <p class="result-card__type">等待你完成问卷。</p>
+                <h3>系统会先给你一个最接近的体质判断。</h3>
+                <p class="result-card__summary">
+                  这里以后可以直接接大模型，输出体质类型、解释、推荐方案和下一步购买入口。
+                </p>
+                <div class="result-card__chips">
+                  <span>饮食产品</span>
+                  <span>泡脚产品</span>
+                  <span>体验类产品</span>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

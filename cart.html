@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SinoHerb | Checkout</title>
-    <meta name="description" content="SinoHerb 结算页示意。" />
+    <title>SinoHerb | 购物车</title>
+    <meta name="description" content="SinoHerb 购物车与结算入口。" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,7 +21,7 @@
       </div>
 
       <header class="site-header">
-        <a class="brand" href="./index.html" aria-label="返回首页">
+        <a class="brand" href="./index.html" aria-label="SinoHerb 首页">
           <span class="brand-mark">S</span>
           <span class="brand-copy">
             <strong>SinoHerb</strong>
@@ -35,7 +35,7 @@
           <a href="./philosophy.html">理念</a>
           <a href="./my-constitution.html">我的体质</a>
           <a href="./about.html">关于我们</a>
-          <a class="cart-button is-active" href="./cart.html" aria-current="page">
+          <a class="cart-button" href="./cart.html">
             <span>Cart</span>
             <span class="cart-button__badge">3</span>
           </a>
@@ -43,72 +43,18 @@
       </header>
 
       <section class="checkout-hero">
-        <span class="eyebrow">结算页 / checkout</span>
-        <h1>确认你的方案，再完成下单。</h1>
+        <span class="eyebrow">购物车 / cart</span>
+        <h1>确认你的方案，再进入结算页。</h1>
         <p class="lead">
-          这里是静态结算示意，后续可以接支付、物流与账号系统。现在先把购买路径跑通。
+          这里把购物车从抽屉改成独立页面，方便用户在下单前重新看一遍商品、体质和价格。
         </p>
       </section>
 
       <div class="checkout-layout">
-        <form class="checkout-form">
+        <section class="checkout-form">
           <div>
-            <span class="eyebrow">Shipping</span>
-            <h2>配送信息</h2>
-          </div>
-
-          <div class="checkout-grid">
-            <label class="checkout-field">
-              <span>First name</span>
-              <input type="text" placeholder="Alex" />
-            </label>
-            <label class="checkout-field">
-              <span>Last name</span>
-              <input type="text" placeholder="Wong" />
-            </label>
-            <label class="checkout-field">
-              <span>Email</span>
-              <input type="email" placeholder="alex@example.com" />
-            </label>
-            <label class="checkout-field">
-              <span>Country / Region</span>
-              <select>
-                <option>United States</option>
-                <option>United Kingdom</option>
-                <option>Canada</option>
-                <option>Australia</option>
-              </select>
-            </label>
-          </div>
-
-          <label class="checkout-field">
-            <span>Address</span>
-            <input type="text" placeholder="Street address" />
-          </label>
-
-          <div class="checkout-grid">
-            <label class="checkout-field">
-              <span>City</span>
-              <input type="text" placeholder="Los Angeles" />
-            </label>
-            <label class="checkout-field">
-              <span>Postal code</span>
-              <input type="text" placeholder="90001" />
-            </label>
-          </div>
-
-          <label class="checkout-field">
-            <span>Notes</span>
-            <textarea placeholder="Any delivery notes or health considerations..."></textarea>
-          </label>
-
-          <button class="button button--primary" type="button">Place order</button>
-        </form>
-
-        <aside class="checkout-summary">
-          <div>
-            <span class="eyebrow">Order summary</span>
-            <h2>你的购物车</h2>
+            <span class="eyebrow">Cart items</span>
+            <h2>当前购物车</h2>
           </div>
 
           <div class="checkout-summary__items">
@@ -141,8 +87,28 @@
           </div>
 
           <p class="lead">后续可在这里接入真实支付、税费、物流和订单状态。</p>
+        </section>
+
+        <aside class="checkout-summary">
+          <div>
+            <span class="eyebrow">Next step</span>
+            <h2>去结算</h2>
+          </div>
+
+          <div class="checkout-summary__item">
+            <div class="checkout-summary__line">
+              <strong>结算页</strong>
+              <span>Ready</span>
+            </div>
+            <p>确认收货信息、邮箱、国家地区和备注，再完成下单。</p>
+          </div>
+
+          <a class="button button--primary" href="./checkout.html">进入结算页</a>
+          <a class="button button--ghost" href="./products.html">继续浏览产品</a>
         </aside>
       </div>
     </div>
+
+    <script src="./script.js"></script>
   </body>
 </html>

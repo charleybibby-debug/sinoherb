@@ -1,10 +1,5 @@
-const body = document.body;
 const quiz = document.getElementById("constitutionQuiz");
 const result = document.getElementById("quizResult");
-const cartDrawer = document.getElementById("cartDrawer");
-const cartCount = document.querySelector("[data-cart-count]");
-const openCartButtons = document.querySelectorAll("[data-open-cart]");
-const closeCartButtons = document.querySelectorAll("[data-close-cart]");
 
 const profiles = {
   liver: {
@@ -39,24 +34,25 @@ const profiles = {
   },
 };
 
-function openCart() {
-  body.classList.add("cart-open");
-  cartDrawer?.setAttribute("aria-hidden", "false");
+function normalizePath(pathname) {
+  const file = pathname.split("/").filter(Boolean).pop() || "index.html";
+  return file === "/" ? "index.html" : file;
 }
 
-function closeCart() {
-  body.classList.remove("cart-open");
-  cartDrawer?.setAttribute("aria-hidden", "true");
+function setActiveNav() {
+  const currentFile = normalizePath(window.location.pathname);
+  document.querySelectorAll(".site-nav a[href]").forEach((link) => {
+    const href = link.getAttribute("href") || "";
+    const file = href.split("/").filter(Boolean).pop() || "index.html";
+    if (file === currentFile) {
+      link.classList.add("is-active");
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.classList.remove("is-active");
+      link.removeAttribute("aria-current");
+    }
+  });
 }
-
-openCartButtons.forEach((button) => button.addEventListener("click", openCart));
-closeCartButtons.forEach((button) => button.addEventListener("click", closeCart));
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    closeCart();
-  }
-});
 
 function computeProfile(answers) {
   const scores = { liver: 0, sleep: 0, damp: 0, qi: 0, stagnation: 0 };
@@ -70,6 +66,19 @@ function computeProfile(answers) {
   return Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
 }
 
+function renderProfile(profile) {
+  return `
+    <p class="result-card__type">${profile.label}</p>
+    <h3>${profile.title}</h3>
+    <p class="result-card__summary">${profile.summary}</p>
+    <div class="result-card__chips">
+      ${profile.products.map((item) => `<span>${item}</span>`).join("")}
+    </div>
+  `;
+}
+
+setActiveNav();
+
 if (quiz && result) {
   quiz.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -77,19 +86,8 @@ if (quiz && result) {
     const formData = new FormData(quiz);
     const answers = Object.fromEntries(formData.entries());
     const key = computeProfile(answers);
-    const profile = profiles[key];
-
-    result.innerHTML = `
-      <p class="result-card__type">${profile.label}</p>
-      <h3>${profile.title}</h3>
-      <p class="result-card__summary">${profile.summary}</p>
-      <div class="result-card__chips">
-        ${profile.products.map((item) => `<span>${item}</span>`).join("")}
-      </div>
-    `;
-
+    result.innerHTML = renderProfile(profiles[key]);
     result.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    cartCount.textContent = "1";
   });
 
   quiz.addEventListener("reset", () => {
