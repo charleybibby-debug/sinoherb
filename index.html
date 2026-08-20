@@ -136,6 +136,88 @@
           </div>
         </section>
 
+        <section class="section assessment" id="assessment">
+          <div class="assessment__intro">
+            <p class="eyebrow">自测</p>
+            <h2>先看看你更接近哪一种体质。</h2>
+            <p>
+              现在先用本地问卷规则帮你筛选体质类型，后面可以无缝替换成大模型判定。
+            </p>
+          </div>
+
+          <div class="assessment__layout">
+            <form class="quiz" id="constitutionQuiz">
+              <fieldset class="quiz__question">
+                <legend>1. 最近最常出现的状态是？</legend>
+                <label><input type="radio" name="q1" value="liver" required /> 容易焦虑、胸口发紧</label>
+                <label><input type="radio" name="q1" value="sleep" /> 睡浅多梦、醒得早</label>
+                <label><input type="radio" name="q1" value="damp" /> 身体沉重、口苦口黏</label>
+                <label><input type="radio" name="q1" value="qi" /> 怕冷、容易乏力</label>
+                <label><input type="radio" name="q1" value="stagnation" /> 胀气、总觉得堵</label>
+              </fieldset>
+
+              <fieldset class="quiz__question">
+                <legend>2. 你的睡眠更像哪一种？</legend>
+                <label><input type="radio" name="q2" value="sleep" required /> 梦多、浅眠、脑子停不下来</label>
+                <label><input type="radio" name="q2" value="liver" /> 一到晚上就容易心烦</label>
+                <label><input type="radio" name="q2" value="damp" /> 睡得久，但醒来还是重</label>
+                <label><input type="radio" name="q2" value="qi" /> 很早醒，醒后特别累</label>
+                <label><input type="radio" name="q2" value="stagnation" /> 翻来覆去，身体总不放松</label>
+              </fieldset>
+
+              <fieldset class="quiz__question">
+                <legend>3. 饮食之后更容易出现什么？</legend>
+                <label><input type="radio" name="q3" value="stagnation" required /> 胀气、消化拖沓</label>
+                <label><input type="radio" name="q3" value="damp" /> 油腻、厚重、发困</label>
+                <label><input type="radio" name="q3" value="qi" /> 胃口小、吃一点就累</label>
+                <label><input type="radio" name="q3" value="liver" /> 情绪波动明显</label>
+                <label><input type="radio" name="q3" value="sleep" /> 晚上更难放松</label>
+              </fieldset>
+
+              <fieldset class="quiz__question">
+                <legend>4. 你最想改善的是？</legend>
+                <label><input type="radio" name="q4" value="liver" required /> 情绪紧、焦虑感</label>
+                <label><input type="radio" name="q4" value="sleep" /> 睡眠质量</label>
+                <label><input type="radio" name="q4" value="damp" /> 身体湿重感</label>
+                <label><input type="radio" name="q4" value="qi" /> 体力和耐力</label>
+                <label><input type="radio" name="q4" value="stagnation" /> 走路都觉得堵</label>
+              </fieldset>
+
+              <fieldset class="quiz__question">
+                <legend>5. 你更适合哪种支持方式？</legend>
+                <label><input type="radio" name="q5" value="liver" required /> 舒缓型饮食</label>
+                <label><input type="radio" name="q5" value="sleep" /> 睡前放松仪式</label>
+                <label><input type="radio" name="q5" value="damp" /> 泡脚与热感护理</label>
+                <label><input type="radio" name="q5" value="qi" /> 温补型支持</label>
+                <label><input type="radio" name="q5" value="stagnation" /> 轻运动与顺畅调理</label>
+              </fieldset>
+
+              <button class="button button--primary quiz__submit" type="submit">
+                查看结果
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12h12m-5-5 5 5-5 5" />
+                </svg>
+              </button>
+            </form>
+
+            <aside class="assessment__result" aria-live="polite">
+              <p class="assessment__result-label">结果预览</p>
+              <div class="assessment__card" id="quizResult">
+                <p class="assessment__type">等待你完成问卷。</p>
+                <h3>系统会先给你一个最接近的体质判断。</h3>
+                <p class="assessment__summary">
+                  这里之后可以直接接大模型，输出体质类型、说明、推荐品类和下一步建议。
+                </p>
+                <div class="assessment__chips">
+                  <span>饮食产品</span>
+                  <span>泡脚产品</span>
+                  <span>体验类产品</span>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
         <section class="section section--flush" id="products">
           <div class="section-head">
             <div>
@@ -392,5 +474,6 @@
         </div>
       </footer>
     </div>
+    <script src="./script.js"></script>
   </body>
 </html>
