@@ -42,82 +42,220 @@
         </nav>
       </header>
 
-      <main class="page-main">
-        <section class="page-hero">
-          <div class="page-hero__panel page-hero__panel--soft">
-            <span class="eyebrow">理念</span>
-            <h1>把中医体质，翻译成海外用户看得懂的解释。</h1>
-            <p class="lead">
-              我们不先讲术语，而是先讲感受、节奏和每天能做什么。体质不是标签，
-              而是身体更常见的倾向：可能是平和稳定，也可能偏向气虚、阳虚、阴虚、痰湿、湿热、血瘀、气郁或特禀。
+      <main class="philosophy-page-main">
+        <section class="philosophy-page-hero" id="philosophy-overview">
+          <div class="philosophy-page-hero__copy">
+            <h1>先理解身体，再选择适合你的日常支持。</h1>
+            <p>
+              传统中医提供观察身体的方法，现代生活让这套方法变得清晰、轻盈，也更容易坚持。
+            </p>
+            <a class="button button--primary" href="./my-constitution.html">了解你的体质方向</a>
+          </div>
+
+          <figure class="philosophy-page-hero__visual">
+            <img
+              data-media-slot="philosophy.hero"
+              src="./assets/philosophy/hero-hybrid.svg"
+              alt="人物生活场景、阴阳平衡与草本植物组成的理念视觉"
+            />
+          </figure>
+        </section>
+
+        <section class="philosophy-page-section philosophy-page-holistic" id="holistic-view">
+          <div class="philosophy-page-section__copy">
+            <h2>身体从来不是孤立的部件。</h2>
+            <p>
+              睡眠、消化、情绪、精力与季节彼此牵动。整体观念，就是把这些细微变化放回同一张身体地图里理解。
             </p>
           </div>
 
-          <div class="page-hero__panel">
-            <div class="philosophy-stack">
-              <div class="philosophy-card">
-                <h3>Body pattern</h3>
-                <p>体质不是标签，而是你身体更常见的倾向。</p>
-              </div>
-              <div class="philosophy-card">
-                <h3>Everyday language</h3>
-                <p>我们用海外用户能听懂的话讲“为什么会这样”。</p>
-              </div>
-              <div class="philosophy-card">
-                <h3>Daily support</h3>
-                <p>产品不是玄学承诺，而是更容易坚持的日常支持。</p>
-              </div>
-            </div>
+          <div class="philosophy-page-holistic__visual">
+            <figure>
+              <img
+                data-media-slot="philosophy.holistic-lifestyle"
+                src="./assets/philosophy/holistic-lifestyle.svg"
+                alt="户外舒展的日常生活场景"
+              />
+            </figure>
+            <ul aria-label="身体关系地图">
+              <li><strong>睡眠</strong><span>影响恢复</span></li>
+              <li><strong>情绪</strong><span>牵动节律</span></li>
+              <li><strong>消化</strong><span>回应压力</span></li>
+              <li><strong>季节</strong><span>改变状态</span></li>
+              <li><strong>节律</strong><span>持续调整</span></li>
+            </ul>
           </div>
         </section>
 
-        <section class="section-card">
-          <div class="section-heading">
-            <div>
-              <span class="eyebrow">翻译方法</span>
-              <h2>先把复杂概念拆成海外用户能理解的三步。</h2>
-            </div>
-            <p>让“体质”变成能阅读、能记住、也能继续往下买的内容结构。</p>
-          </div>
+        <section class="philosophy-page-section philosophy-page-principles" id="core-principles">
+          <header class="philosophy-page-heading">
+            <h2>四个原则，把古老的观察翻译成今天的生活方式。</h2>
+            <p>真实生活场景建立信任，植物与身体插画解释看不见的关系。</p>
+          </header>
 
-          <div class="philosophy-grid">
-            <article class="philosophy-card philosophy-card--large">
-              <h3>Three-step translation</h3>
-              <ol>
-                <li>
-                  <strong>Read the signal.</strong>
-                  先看你是稳定、有点累、怕冷、怕热缺水、身体重、出油长痘、瘀堵、情绪压抑，还是容易过敏。
-                </li>
-                <li>
-                  <strong>Translate the pattern.</strong>
-                  再把九种体质换成更容易理解的英文表达，减少陌生感。
-                </li>
-                <li>
-                  <strong>Recommend the routine.</strong>
-                  最后给出饮食、泡脚、体验三类产品的组合入口。
-                </li>
-              </ol>
+          <div class="philosophy-page-principles__list">
+            <article class="philosophy-page-principle" data-principle="holistic">
+              <span>01</span>
+              <div>
+                <h3>整体观察</h3>
+                <p>从睡眠、消化、情绪、精力与生活环境一起看身体。</p>
+              </div>
+              <figure>
+                <img data-media-slot="philosophy.principle-holistic" src="./assets/philosophy/principle-holistic.svg" alt="草本饮品与身体关系" />
+              </figure>
             </article>
 
-            <div class="philosophy-stack">
-              <article class="philosophy-card">
-                <h3>How we explain</h3>
-                <p>先讲感受，再讲原因，最后才讲产品。</p>
-              </article>
-              <article class="philosophy-card">
-                <h3>What we avoid</h3>
-                <p>不把中医包装成神秘术语，也不做过度承诺。</p>
-              </article>
-              <article class="philosophy-card">
-                <h3>What we want</h3>
-                <p>让海外用户把它当成更容易坚持的日常支持。</p>
-              </article>
-            </div>
+            <article class="philosophy-page-principle" data-principle="balance">
+              <span>02</span>
+              <div>
+                <h3>动态平衡</h3>
+                <p>阴与阳不是固定标签，而是寒热、动静、消耗与恢复之间不断调整的关系。</p>
+              </div>
+              <figure>
+                <img data-media-slot="philosophy.principle-balance" src="./assets/philosophy/principle-balance.svg" alt="阴阳动态轨道" />
+              </figure>
+            </article>
+
+            <article class="philosophy-page-principle" data-principle="personalized">
+              <span>03</span>
+              <div>
+                <h3>辨证施养</h3>
+                <p>相似的感受可能来自不同的体质方向，调养方式也需要因人、因时而改变。</p>
+              </div>
+              <figure>
+                <img
+                  data-media-slot="philosophy.principle-personalized"
+                  src="./assets/philosophy/principle-personalized.svg"
+                  alt="相似感受对应不同身体方向"
+                />
+              </figure>
+            </article>
+
+            <article class="philosophy-page-principle" data-principle="preventive">
+              <span>04</span>
+              <div>
+                <h3>预防为先</h3>
+                <p>在明显不适出现之前读懂微小信号，把支持放进每天。</p>
+              </div>
+              <figure>
+                <img data-media-slot="philosophy.principle-preventive" src="./assets/philosophy/principle-preventive.svg" alt="植物生长与持续调养" />
+              </figure>
+            </article>
           </div>
+        </section>
+
+        <section class="philosophy-page-method" id="philosophy-method">
+          <header class="philosophy-page-heading">
+            <h2>从身体信号，到适合你的日常方案。</h2>
+            <p>先理解，再判断方向，最后才推荐产品与体验。</p>
+          </header>
+
+          <ol>
+            <li>
+              <span>感</span>
+              <h3>读懂身体信号</h3>
+              <p>从最近的睡眠、压力、消化、情绪与能量状态开始。</p>
+            </li>
+            <li>
+              <span>辨</span>
+              <h3>理解体质方向</h3>
+              <p>把复杂概念翻译成身体倾向，而不是给你贴标签。</p>
+            </li>
+            <li>
+              <span>养</span>
+              <h3>建立日常节奏</h3>
+              <p>围绕作息、情绪、饮食与草本支持，形成更容易坚持的方案。</p>
+            </li>
+          </ol>
+        </section>
+
+        <section
+          class="philosophy-page-section philosophy-page-patterns"
+          id="same-signal-different-pattern"
+        >
+          <div>
+            <h2>同一种感受，可能来自不同的身体模式。</h2>
+            <p>“睡不好”只是表面描述。辨证施养，就是先看清差异。</p>
+          </div>
+
+          <div class="philosophy-page-patterns__grid">
+            <article>
+              <figure>
+                <img data-media-slot="philosophy.pattern-tension" src="./assets/philosophy/pattern-tension.svg" alt="思绪紧绷难以入睡" />
+              </figure>
+              <h3>紧绷难放松</h3>
+              <p>需要先帮助情绪与思绪慢下来。</p>
+            </article>
+            <article>
+              <figure>
+                <img data-media-slot="philosophy.pattern-recovery" src="./assets/philosophy/pattern-recovery.svg" alt="疲惫并且恢复不足" />
+              </figure>
+              <h3>疲惫恢复不足</h3>
+              <p>需要先建立稳定的休息与补充节奏。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="philosophy-page-section philosophy-page-routines" id="daily-support">
+          <header class="philosophy-page-heading">
+            <h2>调养，应该自然地发生在生活里。</h2>
+            <p>从常见的五种日常需求出发，选择与你当前状态更匹配的支持。</p>
+          </header>
+
+          <div class="philosophy-page-routines__grid">
+            <a href="./products.html#product-showcase" data-routine="sleep">
+              <figure><img data-media-slot="philosophy.routine-sleep" src="./assets/philosophy/routine-sleep.svg" alt="安静睡眠场景" /></figure>
+              <span>睡眠 · 恢复</span>
+            </a>
+            <a href="./products.html#product-showcase" data-routine="pressure">
+              <figure><img data-media-slot="philosophy.routine-pressure" src="./assets/philosophy/routine-pressure.svg" alt="放松呼吸场景" /></figure>
+              <span>压力 · 呼吸</span>
+            </a>
+            <a href="./products.html#product-showcase" data-routine="digestive">
+              <figure><img data-media-slot="philosophy.routine-digestive" src="./assets/philosophy/routine-digestive.svg" alt="草本饮品场景" /></figure>
+              <span>消化 · 草本</span>
+            </a>
+            <a href="./products.html#product-showcase" data-routine="emotion">
+              <figure><img data-media-slot="philosophy.routine-emotion" src="./assets/philosophy/routine-emotion.svg" alt="户外散步场景" /></figure>
+              <span>情绪 · 松弛</span>
+            </a>
+            <a href="./products.html#product-showcase" data-routine="experience">
+              <figure>
+                <img data-media-slot="philosophy.routine-experience" src="./assets/philosophy/routine-experience.svg" alt="草本体验与身体节律" />
+              </figure>
+              <span>体验 · 节律</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="philosophy-page-translation" id="modern-translation">
+          <figure>
+            <img
+              data-media-slot="philosophy.modern-translation"
+              src="./assets/philosophy/modern-translation.svg"
+              alt="传统草本图谱与现代身体模式说明"
+            />
+          </figure>
+          <div>
+            <h2>传统语言，现代解释。</h2>
+            <p>
+              我们不把中医包装成神秘术语，也不做医疗诊断或夸大承诺。先讲感受，再讲可能的身体倾向，最后给出日常支持。
+            </p>
+            <p>体质不是永久标签，而是一种帮助你更早觉察身体、持续调整生活的观察方法。</p>
+          </div>
+        </section>
+
+        <section class="philosophy-page-final" id="philosophy-cta">
+          <blockquote>
+            不是找到一个永久不变的答案，而是更早听见身体，并随着生活持续调整。
+          </blockquote>
+          <p>从一次轻量的体质对话开始，找到你当前更值得优先关注的方向。</p>
+          <a class="button button--primary" href="./my-constitution.html">开始了解自己的体质</a>
         </section>
       </main>
     </div>
 
     <script src="./script.js"></script>
+    <script src="./frontend-api.js"></script>
   </body>
 </html>

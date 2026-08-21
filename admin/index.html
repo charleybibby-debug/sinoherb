@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SinoHerb 运营后台</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="./admin.css" />
+  </head>
+  <body class="admin-page">
+    <main class="admin-shell">
+      <section class="admin-login" id="adminLoginPanel">
+        <div class="admin-login__mark">S</div>
+        <span class="admin-kicker">SinoHerb / Workspace</span>
+        <h1>欢迎回到运营后台</h1>
+        <p>管理产品、订单与全站内容，让每一次更新都清晰可控。</p>
+        <form id="adminLoginForm">
+          <label>用户名<input name="username" autocomplete="username" required /></label>
+          <label>密码<input name="password" type="password" autocomplete="current-password" required /></label>
+          <button class="admin-button admin-button--primary" type="submit">进入工作台 <span aria-hidden="true">↗</span></button>
+          <p class="admin-message" id="adminLoginMessage" role="alert"></p>
+        </form>
+      </section>
+
+      <section class="admin-workspace" id="adminAppPanel" hidden>
+        <aside class="admin-sidebar" aria-label="后台导航">
+          <div class="admin-sidebar__brand">
+            <div class="admin-brand-mark">S</div>
+            <div><strong>SinoHerb</strong><span>运营工作台</span></div>
+          </div>
+          <div class="admin-sidebar__label">Workspace</div>
+          <nav class="admin-sidebar__nav">
+            <button class="admin-nav-item is-active" type="button" data-admin-view="overview"><span class="admin-nav-item__icon">⌂</span><span>概览</span></button>
+            <button class="admin-nav-item" type="button" data-admin-view="orders"><span class="admin-nav-item__icon">▤</span><span>订单</span><em id="adminOrderBadge" hidden></em></button>
+            <button class="admin-nav-item" type="button" data-admin-view="products"><span class="admin-nav-item__icon">◈</span><span>产品与库存</span></button>
+            <button class="admin-nav-item" type="button" data-admin-view="media"><span class="admin-nav-item__icon">▧</span><span>全站图片</span></button>
+            <button class="admin-nav-item" type="button" data-admin-view="users"><span class="admin-nav-item__icon">◎</span><span>注册用户</span></button>
+            <button class="admin-nav-item" type="button" data-admin-view="model"><span class="admin-nav-item__icon">✦</span><span>模型状态</span></button>
+          </nav>
+          <div class="admin-sidebar__footer">
+            <div class="admin-sidebar__leaf" aria-hidden="true">✳</div>
+            <p>以草本之道，<br />守护日常平衡。</p>
+          </div>
+        </aside>
+
+        <div class="admin-main">
+          <header class="admin-topbar">
+            <div class="admin-topbar__title"><span class="admin-kicker">SinoHerb / <span id="adminBreadcrumb">概览</span></span><h1 id="adminViewTitle">概览</h1></div>
+            <div class="admin-topbar__tools">
+              <span class="admin-service"><i></i> 服务正常</span>
+              <span class="admin-user"><span class="admin-user__avatar">S</span><span id="adminUsername">管理员</span></span>
+              <button class="admin-logout" id="adminLogout" type="button">退出</button>
+            </div>
+          </header>
+          <p class="admin-notice" id="adminNotice" role="status"></p>
+
+          <div class="admin-content">
+            <section class="admin-view is-active" data-view="overview">
+              <div class="admin-view__intro"><div><p class="admin-overline">Today at SinoHerb</p><h2>把重要的事，放在眼前。</h2><p>这里是品牌日常运营的总览。查看产品状态、订单进度与内容更新。</p></div><button class="admin-link-button" type="button" data-admin-view="products">查看产品清单 <span>→</span></button></div>
+              <div class="admin-stats" aria-label="数据概览">
+                <article class="admin-stat"><span class="admin-stat__label">已上架产品</span><strong id="adminActiveProductCount">—</strong><span class="admin-stat__note">正在售卖</span></article>
+                <article class="admin-stat"><span class="admin-stat__label">已下架产品</span><strong id="adminArchivedProductCount">—</strong><span class="admin-stat__note">可随时重新上架</span></article>
+                <article class="admin-stat"><span class="admin-stat__label">待联系订单</span><strong id="adminPendingOrderCount">—</strong><span class="admin-stat__note">需要运营跟进</span></article>
+                <article class="admin-stat"><span class="admin-stat__label">图片位</span><strong id="adminMediaCount">—</strong><span class="admin-stat__note">全站内容资产</span></article>
+              </div>
+              <div class="admin-columns">
+                <section class="admin-panel-block"><div class="admin-block-heading"><div><p class="admin-overline">Latest orders</p><h3>最近订单</h3></div><button class="admin-text-button" type="button" data-admin-view="orders">全部订单 <span>→</span></button></div><div id="adminRecentOrders"></div></section>
+                <section class="admin-panel-block"><div class="admin-block-heading"><div><p class="admin-overline">Product pulse</p><h3>需要留意的产品</h3></div><button class="admin-text-button" type="button" data-admin-view="products">管理产品 <span>→</span></button></div><div id="adminProductPulse"></div></section>
+              </div>
+            </section>
+
+            <section class="admin-view" data-view="orders" hidden>
+              <div class="admin-view__heading"><div><p class="admin-overline">Orders</p><h2>订单</h2><p>查看顾客提交的订单，并跟进每一次联系。</p></div><span class="admin-view__meta" id="adminOrderMeta">—</span></div>
+              <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>订单编号</th><th>顾客</th><th>金额</th><th>提交时间</th><th>状态</th><th>操作</th></tr></thead><tbody id="adminOrdersTable"></tbody></table></div>
+            </section>
+
+            <section class="admin-view" data-view="products" hidden>
+              <div class="admin-view__heading"><div><p class="admin-overline">Products & inventory</p><h2>产品与库存</h2><p>调整产品状态，及时掌握每个体质方案的库存。</p></div><div class="admin-filter" role="tablist" aria-label="产品状态"><button type="button" data-product-filter="all" aria-pressed="true">全部 <span id="adminAllProductCount">0</span></button><button type="button" data-product-filter="active" aria-pressed="false">已上架 <span id="adminActiveFilterCount">0</span></button><button type="button" data-product-filter="archived" aria-pressed="false">已下架 <span id="adminArchivedFilterCount">0</span></button></div></div>
+              <div class="admin-table-wrap"><table class="admin-table admin-product-table"><thead><tr><th>产品</th><th>体质 / 分类</th><th>库存</th><th>状态</th><th>更新时间</th><th>操作</th></tr></thead><tbody id="adminProducts"></tbody></table></div>
+            </section>
+
+            <section class="admin-view" data-view="media" hidden>
+              <div class="admin-view__heading"><div><p class="admin-overline">Site media</p><h2>全站图片</h2><p>按页面替换展示图，保存后前台自动更新。</p></div><span class="admin-view__meta" id="adminMediaMeta">—</span></div>
+              <div id="adminMedia"></div>
+            </section>
+
+            <section class="admin-view" data-view="users" hidden>
+              <div class="admin-view__heading"><div><p class="admin-overline">Registered customers</p><h2>注册用户</h2><p>查看通过邮箱或手机号注册的用户，密码等敏感信息不会展示。</p></div><span class="admin-view__meta" id="adminUsersMeta">—</span></div>
+              <div class="admin-table-wrap"><table class="admin-table admin-users-table"><thead><tr><th>用户</th><th>联系方式</th><th>状态</th><th>注册时间</th><th>最近登录</th></tr></thead><tbody id="adminUsersTable"></tbody></table></div>
+            </section>
+
+            <section class="admin-view" data-view="model" hidden>
+              <div class="admin-view__heading"><div><p class="admin-overline">Model health</p><h2>模型状态</h2><p>查看体质对话服务当前使用的模型与降级策略。</p></div></div>
+              <div id="adminModelHealth"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="./admin.js" type="module"></script>
+  </body>
+</html>

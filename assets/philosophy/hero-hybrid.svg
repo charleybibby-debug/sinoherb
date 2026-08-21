@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 500">
+  <rect width="620" height="500" fill="#eedfdd"/>
+  <rect x="24" y="36" width="360" height="428" rx="180" fill="#83947f"/>
+  <circle cx="204" cy="164" r="66" fill="#d2a48a"/>
+  <path d="M140 161c14-72 110-89 137-8-42-24-85-21-137 8Z" fill="#41352f"/>
+  <path d="M112 420c5-127 33-185 94-185s91 58 97 185Z" fill="#f3eadf"/>
+  <path d="M264 279c82 10 95 74 100 135" fill="none" stroke="#d2a48a" stroke-linecap="round" stroke-width="27"/>
+  <circle cx="457" cy="130" r="106" fill="#d6c49d" opacity=".85"/>
+  <path d="M457 34c53 0 96 43 96 96s-43 96-96 96c45-28 46-67 0-96-46-29-45-69 0-96Z" fill="#365340"/>
+  <path d="M457 34c-53 0-96 43-96 96s43 96 96 96c-45-28-46-67 0-96 46-29 45-68 0-96Z" fill="#f7eee4"/>
+  <g fill="none" stroke="#4b6851" stroke-width="3">
+    <path d="M402 484c30-113 68-183 145-266"/>
+    <path d="M445 371c-47-51-7-101 27-123 19 49 11 95-27 123Z" fill="#a7b69a"/>
+    <path d="M484 318c57-34 86 17 97 54-48 10-87-8-97-54Z" fill="#819b7f"/>
+  </g>
+  <rect x="348" y="370" width="242" height="96" fill="#fff8ef" opacity=".94"/>
+  <text x="370" y="404" fill="#33463a" font-family="Georgia, serif" font-size="18">身体信号</text>
+  <path d="M370 418h64" stroke="#a47a51"/>
+  <text x="370" y="446" fill="#627066" font-family="Arial, sans-serif" font-size="14">→ 体质方向 → 日常节奏</text>
+</svg>

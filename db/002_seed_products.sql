@@ -1,0 +1,30 @@
+INSERT INTO products (slug, name, subtitle, description, category, constitution_type, price_cents, compare_at_price_cents, stock_quantity, status, sort_order, badge, visual_variant)
+VALUES
+('balance-daily-pack', 'Balance Daily Pack', '均衡日常餐包', '以日常精力、消化与规律节奏为核心的基础支持。', 'digestive', 'balanced', 4800, 5600, 40, 'active', 1, '畅销书', 'sage'),
+('yin-time-tea', 'Yin Time Tea', '睡前舒润茶', '为夜间节奏准备的温和饮用仪式。', 'sleep', 'yinDeficiency', 3200, 3800, 40, 'active', 2, '新品', 'lilac'),
+('calm-pressure-blend', 'Calm Pressure Blend', '日常减压饮', '给忙碌日程一个缓冲空间。', 'pressure', 'qiStagnation', 3600, 4200, 40, 'active', 3, '精选', 'rose'),
+('warm-qi-bundle', 'Warm Qi Bundle', '益气健脾早餐组合', '适合疲惫日常的温和早餐支持。', 'digestive', 'qiDeficiency', 6800, 7800, 30, 'active', 4, '组合', 'amber'),
+('night-ritual-set', 'Night Ritual Set', '暖身睡前组合', '把温暖带入夜间仪式。', 'sleep', 'yangDeficiency', 7400, 8600, 30, 'active', 5, '组合', 'plum'),
+('emotional-balance-tea', 'Emotional Balance Tea', '平衡情绪花草茶', '陪伴情绪回到更稳定的节奏。', 'emotion', 'qiStagnation', 2900, 3400, 40, 'active', 6, '精选', 'mint'),
+('workday-reset-kit', 'Workday Reset Kit', '工作日压力恢复工具', '为高压工作日安排一个恢复间隙。', 'pressure', 'qiDeficiency', 4200, 4900, 25, 'active', 7, '工具', 'blue'),
+('breathing-experience', 'Breathing Experience', '呼吸与户外体验', '通过呼吸与户外活动重新找回节律。', 'experience', 'bloodStasis', 5600, 6400, 20, 'active', 8, '体验', 'cream'),
+('light-body-food-pack', 'Light Body Food Pack', '轻体祛湿餐包', '从日常饮食减轻厚重感。', 'digestive', 'phlegmDampness', 4600, 5400, 35, 'active', 9, '精选', 'sage'),
+('sleep-down-guide', 'Sleep Down Guide', '温和晚间节律工具', '帮助建立固定的晚间安排。', 'sleep', 'inheritedSpecial', 2400, 2900, 50, 'active', 10, '工具', 'lilac'),
+('clear-heart-bundle', 'Clear Heart Bundle', '清心舒缓组合', '为偏燥日常提供更柔和的夜间支持。', 'emotion', 'yinDeficiency', 6400, 7400, 25, 'active', 11, '组合', 'rose'),
+('seasonal-care-session', 'Seasonal Care Session', '季节防护体验', '围绕环境变化提前安排日常节奏。', 'experience', 'inheritedSpecial', 6200, 7200, 20, 'active', 12, '体验', 'cream'),
+('warm-recovery-soup', 'Warm Recovery Soup', '温阳汤饮组合', '适合冷感日常的温热饮食。', 'digestive', 'yangDeficiency', 3800, 4500, 35, 'active', 13, '精选', 'amber'),
+('clear-damp-tea', 'Clear Damp Tea', '清热利湿茶饮', '偏好清淡节奏的日常饮品。', 'digestive', 'dampHeat', 3400, 4000, 35, 'active', 14, '精选', 'mint'),
+('night-recovery-session', 'Night Recovery Session', '夜间修复体验', '为夜晚留出安静恢复的时间。', 'sleep', 'bloodStasis', 5800, 6800, 20, 'active', 15, '体验', 'plum')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name,
+  subtitle = EXCLUDED.subtitle,
+  description = EXCLUDED.description,
+  category = EXCLUDED.category,
+  constitution_type = EXCLUDED.constitution_type,
+  price_cents = EXCLUDED.price_cents,
+  compare_at_price_cents = EXCLUDED.compare_at_price_cents,
+  status = EXCLUDED.status,
+  sort_order = EXCLUDED.sort_order,
+  badge = EXCLUDED.badge,
+  visual_variant = EXCLUDED.visual_variant,
+  updated_at = NOW();

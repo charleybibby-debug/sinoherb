@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 220">
+  <rect width="520" height="220" fill="#dbe7d8"/>
+  <rect width="288" height="220" fill="#c9b89c"/>
+  <circle cx="142" cy="112" r="76" fill="#f1e8dc"/>
+  <path d="M102 58h82l-11 106h-60Z" fill="#fffaf1"/>
+  <path d="M184 78c48-12 45 65 2 51" fill="none" stroke="#fffaf1" stroke-width="13"/>
+  <g fill="#69805e"><ellipse cx="65" cy="150" rx="54" ry="15" transform="rotate(28 65 150)"/><ellipse cx="225" cy="62" rx="48" ry="14" transform="rotate(-28 225 62)"/></g>
+  <text x="330" y="74" fill="#294b3a" font-family="Georgia, serif" font-size="23">整体观察</text>
+  <path d="M330 94h70" stroke="#b78a52"/>
+  <text x="330" y="127" fill="#667169" font-family="Arial, sans-serif" font-size="15">身体 · 情绪 · 环境</text>
+  <text x="330" y="155" fill="#667169" font-family="Arial, sans-serif" font-size="15">共同形成一张地图</text>
+</svg>

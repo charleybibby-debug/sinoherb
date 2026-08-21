@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 220">
+  <rect width="520" height="220" fill="#eedfdd"/>
+  <rect width="288" height="220" fill="#dac7c5"/>
+  <circle cx="144" cy="110" r="76" fill="none" stroke="#7b6e66" stroke-width="2"/>
+  <path d="M144 34c42 0 76 34 76 76s-34 76-76 76c38-24 38-52 0-76-38-24-38-52 0-76Z" fill="#35533f"/>
+  <path d="M144 34c-42 0-76 34-76 76s34 76 76 76c-38-24-38-52 0-76 38-24 38-52 0-76Z" fill="#f8eee5"/>
+  <text x="330" y="65" fill="#294b3a" font-family="Georgia, serif" font-size="23">动态平衡</text>
+  <path d="M330 84h70" stroke="#b78a52"/>
+  <text x="330" y="118" fill="#667169" font-family="Arial, sans-serif" font-size="15">寒 ↔ 热　动 ↔ 静</text>
+  <text x="330" y="150" fill="#667169" font-family="Arial, sans-serif" font-size="15">消耗 ↔ 恢复</text>
+</svg>

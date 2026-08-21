@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 220">
+  <rect width="520" height="220" fill="#eedfdd"/>
+  <rect width="288" height="220" fill="#d8c7a8"/>
+  <path d="M146 206c-10-75 5-132 0-187" fill="none" stroke="#4d6a50" stroke-width="5"/>
+  <g fill="#78936f"><ellipse cx="99" cy="138" rx="52" ry="16" transform="rotate(28 99 138)"/><ellipse cx="187" cy="90" rx="54" ry="16" transform="rotate(-25 187 90)"/></g>
+  <g fill="#a9604c"><circle cx="144" cy="48" r="18"/><circle cx="171" cy="36" r="12"/></g>
+  <text x="330" y="59" fill="#294b3a" font-family="Georgia, serif" font-size="23">预防为先</text>
+  <path d="M330 79h70" stroke="#b78a52"/>
+  <text x="330" y="111" fill="#667169" font-family="Arial, sans-serif" font-size="15">早一点觉察</text>
+  <text x="330" y="139" fill="#667169" font-family="Arial, sans-serif" font-size="15">轻一点调整</text>
+  <text x="330" y="167" fill="#667169" font-family="Arial, sans-serif" font-size="15">久一点坚持</text>
+</svg>

@@ -46,7 +46,7 @@
         <span class="eyebrow">购物车 / cart</span>
         <h1>确认你的方案，再进入结算页。</h1>
         <p class="lead">
-          这里把购物车从抽屉改成独立页面，方便用户在下单前重新看一遍商品、体质和价格。
+          首页可以快速打开购物车抽屉；这里则用于完整核对商品、体质和价格，再进入结算。
         </p>
       </section>
 
@@ -57,36 +57,14 @@
             <h2>当前购物车</h2>
           </div>
 
-          <div class="checkout-summary__items">
-            <article class="checkout-summary__item">
-              <div class="checkout-summary__line">
-                <strong>Calm Tea Blend</strong>
-                <span>$24</span>
-              </div>
-              <p>饮食产品 · 气郁质</p>
-            </article>
-            <article class="checkout-summary__item">
-              <div class="checkout-summary__line">
-                <strong>Night Foot Soak</strong>
-                <span>$32</span>
-              </div>
-              <p>泡脚产品 · 阴虚质</p>
-            </article>
-            <article class="checkout-summary__item">
-              <div class="checkout-summary__line">
-                <strong>Experience Pass</strong>
-                <span>$18</span>
-              </div>
-              <p>体验类产品 · 血瘀质</p>
-            </article>
-          </div>
+          <div class="checkout-summary__items" id="cartPageItems"><p>正在加载购物车…</p></div>
 
-          <div class="checkout-summary__line">
+          <div class="checkout-summary__line" id="cartPageTotal">
             <span>Subtotal</span>
-            <strong>$74</strong>
+            <strong>$0.00</strong>
           </div>
 
-          <p class="lead">后续可在这里接入真实支付、税费、物流和订单状态。</p>
+          <p class="lead">首期订单提交后由工作人员联系确认，不在线收款。</p>
         </section>
 
         <aside class="checkout-summary">
@@ -110,5 +88,6 @@
     </div>
 
     <script src="./script.js"></script>
+    <script src="./frontend-api.js"></script>
   </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SinoHerb | 产品</title>
-    <meta name="description" content="SinoHerb 的饮食、泡脚、体验三类产品入口，按九种中医体质推荐。" />
+    <meta name="description" content="SinoHerb 按九种中医体质推荐睡眠、压力、消化、情绪与体验类产品。" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -43,193 +43,392 @@
       </header>
 
       <main class="page-main">
-        <section class="page-hero">
-          <div class="page-hero__panel page-hero__panel--gold">
-            <span class="eyebrow">产品</span>
-            <h1>三类产品入口，按九种体质找到日常支持方式。</h1>
-            <p class="lead">
-              我们把中药和中医体质翻译成海外用户容易理解的三条路径：吃什么、怎么泡脚、
-              做什么体验。每条路径都可以按 1 种平和质与 8 种偏颇体质继续推荐。
-            </p>
-            <div class="hero__actions">
-              <a class="button button--primary" href="./my-constitution.html">先聊体质</a>
-              <a class="button button--ghost" href="./philosophy.html">看理念解释</a>
+        <section class="product-recommendation" id="products-overview" aria-labelledby="productRecommendationTitle">
+          <div class="product-recommendation__feature">
+            <div class="product-recommendation__visual" data-media-slot="products.feature" role="img" aria-label="Balance Daily Pack 产品展示">
+              <div class="product-recommendation__bottle product-bottle">
+                <span>Balance<br /><small>DAILY</small></span>
+              </div>
+            </div>
+
+            <div class="product-recommendation__copy">
+              <span class="product-recommendation__label">本周推荐 · 平和质 / 气虚质</span>
+              <h1 id="productRecommendationTitle">从一件真正适合当下的产品开始</h1>
+              <p>
+                以日常精力、消化与恢复节奏为核心的基础支持。先看主推产品，
+                再按体质延伸到更具体的睡眠、压力和情绪方案。
+              </p>
+              <div class="product-recommendation__points" aria-label="主推产品方向">
+                <span>日常精力</span>
+                <span>消化支持</span>
+                <span>规律节奏</span>
+              </div>
+              <div class="product-recommendation__actions">
+                <a class="button button--primary" href="./product-detail.html?product=balance-daily-pack">查看主推产品</a>
+                <a class="button button--ghost" href="#product-showcase">按体质选购</a>
+              </div>
             </div>
           </div>
 
-          <div class="page-hero__panel">
-            <div class="hero__chips">
-              <span>Daily food support</span>
-              <span>Foot soak rituals</span>
-              <span>Guided experiences</span>
-              <span>9 constitution types</span>
-            </div>
-            <h2 style="margin-top: 22px;">一条清晰的购买路径</h2>
-            <p class="lead" style="margin-top: 12px;">
-              先聊出体质倾向，再给出产品组合，最后进入购物车与结算页。
-            </p>
-            <div class="trust-row" style="margin-top: 18px;">
-              <span>饮食</span>
-              <span>泡脚</span>
-              <span>体验</span>
-            </div>
+          <div class="product-recommendation__related" aria-label="关联产品推荐">
+            <a class="product-recommendation-card product-recommendation-card--lilac" href="./product-detail.html?product=yin-time-tea">
+              <span class="product-recommendation-card__visual" aria-hidden="true">
+                <span class="product-bottle"><span>Yin Time<br /><small>SLEEP</small></span></span>
+              </span>
+              <span class="product-recommendation-card__body">
+                <span class="product-recommendation-card__category">睡眠 · 阴虚质 · $32</span>
+                <strong>Yin Time Tea</strong>
+                <span>睡前舒润茶</span>
+              </span>
+            </a>
+
+            <a class="product-recommendation-card product-recommendation-card--rose" href="./product-detail.html?product=calm-pressure-blend">
+              <span class="product-recommendation-card__visual" aria-hidden="true">
+                <span class="product-bottle"><span>Calm<br /><small>RESET</small></span></span>
+              </span>
+              <span class="product-recommendation-card__body">
+                <span class="product-recommendation-card__category">压力 · 气郁质 · $36</span>
+                <strong>Calm Pressure Blend</strong>
+                <span>日常减压饮</span>
+              </span>
+            </a>
+
+            <a class="product-recommendation-card product-recommendation-card--amber" href="./product-detail.html?product=light-body-food-pack">
+              <span class="product-recommendation-card__visual" aria-hidden="true">
+                <span class="product-bottle"><span>Light<br /><small>BODY</small></span></span>
+              </span>
+              <span class="product-recommendation-card__body">
+                <span class="product-recommendation-card__category">消化 · 痰湿质 · $46</span>
+                <strong>Light Body Food Pack</strong>
+                <span>轻体祛湿餐包</span>
+              </span>
+            </a>
           </div>
         </section>
 
-        <section class="section-card">
-          <div class="section-heading">
-            <div>
-              <span class="eyebrow">三条产品线</span>
-              <h2>每个品类都围绕“日常可坚持”来设计。</h2>
-            </div>
-            <p>不是复杂调理包，而是更容易理解、购买和复购的支持方式。</p>
+        <section class="product-storefront" id="product-showcase" aria-labelledby="productShowcaseTitle">
+          <div class="product-storefront__heading">
+            <span class="eyebrow">SinoHerb collection</span>
+            <h2 id="productShowcaseTitle">选购健康产品</h2>
           </div>
 
-          <div class="category-grid">
-            <article class="feature-card feature-card--sage">
+          <div class="product-toolbar" aria-label="产品筛选与排序">
+            <div class="product-filters" role="group" aria-label="产品类别">
+              <button class="product-filter is-active" type="button" data-product-filter="all">全部</button>
+              <label class="constitution-select constitution-select--inline">
+                <span class="sr-only">选择体质</span>
+                <select data-constitution-filter aria-label="选择体质">
+                  <option value="all">全部体质</option>
+                  <option value="balanced">平和质 · 健康型</option>
+                  <option value="qiDeficiency">气虚质 · 容易累</option>
+                  <option value="yangDeficiency">阳虚质 · 怕冷</option>
+                  <option value="yinDeficiency">阴虚质 · 怕热缺水</option>
+                  <option value="phlegmDampness">痰湿质 · 多痰肥胖</option>
+                  <option value="dampHeat">湿热质 · 长痘出油</option>
+                  <option value="bloodStasis">血瘀质 · 长斑瘀堵</option>
+                  <option value="qiStagnation">气郁质 · 情绪压抑</option>
+                  <option value="inheritedSpecial">特禀质 · 过敏先天</option>
+                </select>
+              </label>
+              <button class="product-filter" type="button" data-product-filter="digestive">消化</button>
+              <button class="product-filter" type="button" data-product-filter="pressure">压力</button>
+              <button class="product-filter" type="button" data-product-filter="sleep">睡眠</button>
+              <button class="product-filter" type="button" data-product-filter="emotion">情绪</button>
+              <button class="product-filter" type="button" data-product-filter="experience">体验</button>
+              <button class="product-filter" type="button" data-product-filter="tools">工具</button>
+            </div>
+            <div class="product-toolbar__sort">
+              <strong><span data-product-count>15</span> 种产品</strong>
+              <label>
+                <span class="sr-only">排序方式</span>
+                <select data-product-sort>
+                  <option value="featured">精选</option>
+                  <option value="name">名称</option>
+                  <option value="price-low">价格从低到高</option>
+                  <option value="price-high">价格从高到低</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="product-showcase-grid" data-product-grid>
+            <article class="store-product-card" data-product-card data-constitution="balanced" data-category="digestive" data-name="Balance Daily Pack" data-price="48">
+              <div class="store-product-card__visual product-art product-art--sage" data-media-slot="product.balance-daily-pack.card">
+                <span class="store-product-card__badge">畅销书</span>
+                <div class="product-bottle"><span>Balance<br /><small>DAILY</small></span></div>
+              </div>
+              <div class="store-product-card__body"><span class="store-product-card__type">消化 · 平和质</span><h3>Balance Daily Pack</h3><p>均衡日常餐包</p><strong>$48</strong><a href="./product-detail.html?product=balance-daily-pack">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="yinDeficiency" data-category="sleep" data-name="Yin Time Tea" data-price="32">
+              <div class="store-product-card__visual product-art product-art--lilac" data-media-slot="product.yin-time-tea.card"><span class="store-product-card__badge">新品</span><div class="product-bottle"><span>Yin Time<br /><small>SLEEP</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">睡眠 · 阴虚质</span><h3>Yin Time Tea</h3><p>睡前舒润茶</p><strong>$32</strong><a href="./product-detail.html?product=yin-time-tea">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="qiStagnation" data-category="pressure" data-name="Calm Pressure Blend" data-price="36">
+              <div class="store-product-card__visual product-art product-art--rose" data-media-slot="product.calm-pressure-blend.card"><span class="store-product-card__badge">精选</span><div class="product-bottle"><span>Calm<br /><small>RESET</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">压力 · 气郁质</span><h3>Calm Pressure Blend</h3><p>日常减压饮</p><strong>$36</strong><a href="./product-detail.html?product=calm-pressure-blend">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="qiDeficiency" data-category="digestive bundle" data-name="Warm Qi Bundle" data-price="68">
+              <div class="store-product-card__visual product-art product-art--amber" data-media-slot="product.warm-qi-bundle.card"><span class="store-product-card__badge">组合</span><div class="product-bottle product-bottle--pair"><span>Warm Qi<br /><small>BUNDLE</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">消化 · 气虚质</span><h3>Warm Qi Bundle</h3><p>益气健脾早餐组合</p><strong>$68</strong><a href="./product-detail.html?product=warm-qi-bundle">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="yangDeficiency" data-category="sleep bundle" data-name="Night Ritual Set" data-price="74">
+              <div class="store-product-card__visual product-art product-art--plum" data-media-slot="product.night-ritual-set.card"><span class="store-product-card__badge">组合</span><div class="product-bottle product-bottle--pair"><span>Night<br /><small>RITUAL</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">睡眠 · 阳虚质</span><h3>Night Ritual Set</h3><p>暖身睡前组合</p><strong>$74</strong><a href="./product-detail.html?product=night-ritual-set">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="qiStagnation" data-category="emotion" data-name="Emotional Balance Tea" data-price="29">
+              <div class="store-product-card__visual product-art product-art--mint" data-media-slot="product.emotional-balance-tea.card"><span class="store-product-card__badge">精选</span><div class="product-bottle"><span>Balance<br /><small>MOOD</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">情绪 · 气郁质</span><h3>Emotional Balance Tea</h3><p>平衡情绪花草茶</p><strong>$29</strong><a href="./product-detail.html?product=emotional-balance-tea">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="qiDeficiency" data-category="pressure tools" data-name="Workday Reset Kit" data-price="42">
+              <div class="store-product-card__visual product-art product-art--blue" data-media-slot="product.workday-reset-kit.card"><span class="store-product-card__badge">工具</span><div class="product-bottle"><span>Reset<br /><small>WORKDAY</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">压力 · 气虚质</span><h3>Workday Reset Kit</h3><p>工作日压力恢复工具</p><strong>$42</strong><a href="./product-detail.html?product=workday-reset-kit">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="bloodStasis" data-category="experience" data-name="Breathing Experience" data-price="56">
+              <div class="store-product-card__visual product-art product-art--cream" data-media-slot="product.breathing-experience.card"><span class="store-product-card__badge">体验</span><div class="product-bottle"><span>Breathe<br /><small>SESSION</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">体验 · 血瘀质</span><h3>Breathing Experience</h3><p>呼吸与户外体验</p><strong>$56</strong><a href="./product-detail.html?product=breathing-experience">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="phlegmDampness" data-category="digestive" data-name="Light Body Food Pack" data-price="46">
+              <div class="store-product-card__visual product-art product-art--sage" data-media-slot="product.light-body-food-pack.card"><span class="store-product-card__badge">精选</span><div class="product-bottle"><span>Light<br /><small>BODY</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">消化 · 痰湿质</span><h3>Light Body Food Pack</h3><p>轻体祛湿餐包</p><strong>$46</strong><a href="./product-detail.html?product=light-body-food-pack">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="inheritedSpecial" data-category="sleep tools" data-name="Sleep Down Guide" data-price="24">
+              <div class="store-product-card__visual product-art product-art--lilac" data-media-slot="product.sleep-down-guide.card"><span class="store-product-card__badge">工具</span><div class="product-bottle"><span>Sleep<br /><small>GUIDE</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">睡眠 · 特禀质</span><h3>Sleep Down Guide</h3><p>温和晚间节律工具</p><strong>$24</strong><a href="./product-detail.html?product=sleep-down-guide">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="yinDeficiency" data-category="emotion bundle" data-name="Clear Heart Bundle" data-price="64">
+              <div class="store-product-card__visual product-art product-art--rose" data-media-slot="product.clear-heart-bundle.card"><span class="store-product-card__badge">组合</span><div class="product-bottle product-bottle--pair"><span>Clear<br /><small>HEART</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">情绪 · 阴虚质</span><h3>Clear Heart Bundle</h3><p>清心舒缓组合</p><strong>$64</strong><a href="./product-detail.html?product=clear-heart-bundle">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="inheritedSpecial" data-category="experience" data-name="Seasonal Care Session" data-price="62">
+              <div class="store-product-card__visual product-art product-art--amber" data-media-slot="product.seasonal-care-session.card"><span class="store-product-card__badge">体验</span><div class="product-bottle"><span>Season<br /><small>CARE</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">体验 · 特禀质</span><h3>Seasonal Care Session</h3><p>季节防护体验</p><strong>$62</strong><a href="./product-detail.html?product=seasonal-care-session">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="yangDeficiency" data-category="digestive pressure" data-name="Warm Recovery Soup" data-price="38">
+              <div class="store-product-card__visual product-art product-art--plum" data-media-slot="product.warm-recovery-soup.card"><span class="store-product-card__badge">精选</span><div class="product-bottle"><span>Warm<br /><small>RECOVERY</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">消化 · 阳虚质</span><h3>Warm Recovery Soup</h3><p>温阳汤饮组合</p><strong>$38</strong><a href="./product-detail.html?product=warm-recovery-soup">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="dampHeat" data-category="digestive" data-name="Clear Damp Tea" data-price="34">
+              <div class="store-product-card__visual product-art product-art--mint" data-media-slot="product.clear-damp-tea.card"><span class="store-product-card__badge">畅销</span><div class="product-bottle"><span>Clear<br /><small>DAMP</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">消化 · 湿热质</span><h3>Clear Damp Tea</h3><p>清热利湿茶饮</p><strong>$34</strong><a href="./product-detail.html?product=clear-damp-tea">查看产品</a></div>
+            </article>
+
+            <article class="store-product-card" data-product-card data-constitution="bloodStasis" data-category="sleep experience" data-name="Night Recovery Session" data-price="58">
+              <div class="store-product-card__visual product-art product-art--blue" data-media-slot="product.night-recovery-session.card"><span class="store-product-card__badge">体验</span><div class="product-bottle"><span>Night<br /><small>RECOVERY</small></span></div></div>
+              <div class="store-product-card__body"><span class="store-product-card__type">睡眠 · 血瘀质</span><h3>Night Recovery Session</h3><p>夜间修复体验</p><strong>$58</strong><a href="./product-detail.html?product=night-recovery-session">查看产品</a></div>
+            </article>
+          </div>
+          <p class="product-empty" data-product-empty hidden>这个分类暂时没有产品，请先看看其他支持方式。</p>
+        </section>
+
+        <section class="section-card" id="product-categories" hidden>
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">五类支持方式</span>
+              <h2>从身体感受出发，选择更容易坚持的产品。</h2>
+            </div>
+            <p>每种体质都有五个入口：睡眠、压力、消化、情绪和体验。先看方向，再进入对应产品。</p>
+          </div>
+
+          <div class="support-grid">
+            <article class="feature-card feature-card--sage" id="digestive-products">
               <span class="feature-card__index">01</span>
-              <h3>饮食产品 / Food</h3>
-              <p>茶饮、早餐包、汤饮和日常饮食支持，适合想从每天吃喝开始的用户。</p>
+              <h3>消化类 / Digestive</h3>
+              <p>从早餐包、汤饮和轻盈餐食开始，给每天的饮食一个更清晰的节奏。</p>
               <ul>
-                <li>Herbal tea blends</li>
                 <li>Daily food packs</li>
                 <li>Gentle soup kits</li>
+                <li>Herbal digestive blends</li>
               </ul>
-              <a class="text-link" href="./my-constitution.html">先聊体质再推荐</a>
+              <a class="text-link" href="#product-showcase">查看精选产品</a>
             </article>
 
-            <article class="feature-card feature-card--blush">
+            <article class="feature-card feature-card--blush" id="sleep-products">
               <span class="feature-card__index">02</span>
-              <h3>泡脚产品 / Foot soak</h3>
-              <p>睡前热感仪式、恢复型泡脚包和放松护理，让调理更像日常习惯。</p>
+              <h3>睡眠类 / Sleep</h3>
+              <p>把睡前饮品、热感仪式和安静时段组合起来，帮助建立稳定的晚间节奏。</p>
               <ul>
-                <li>Evening soak bundles</li>
-                <li>Warm recovery packs</li>
-                <li>Sleep-down ritual sets</li>
+                <li>Sleep-down tea</li>
+                <li>Evening soak rituals</li>
+                <li>Night recovery sets</li>
               </ul>
-              <a class="text-link" href="./my-constitution.html">先聊体质再推荐</a>
+              <a class="text-link" href="#product-showcase">查看精选产品</a>
             </article>
 
-            <article class="feature-card feature-card--gold">
+            <article class="feature-card feature-card--sage" id="pressure-products">
               <span class="feature-card__index">03</span>
-              <h3>体验类产品 / Experience</h3>
-              <p>线下/线上体验、内容课程和季节性方案，把中医变成可参与的过程。</p>
+              <h3>压力类 / Pressure</h3>
+              <p>用呼吸、节律和轻量恢复支持，给高压工作日安排可以执行的缓冲。</p>
+              <ul>
+                <li>Stress reset blends</li>
+                <li>Breathing practices</li>
+                <li>Workday recovery kits</li>
+              </ul>
+              <a class="text-link" href="#product-showcase">查看精选产品</a>
+            </article>
+
+            <article class="feature-card feature-card--gold" id="emotion-products">
+              <span class="feature-card__index">04</span>
+              <h3>情绪类 / Emotional</h3>
+              <p>通过舒缓茶饮、呼吸练习和情绪陪伴，把“放松”变成可参与的日常动作。</p>
+              <ul>
+                <li>Calming herbal blends</li>
+                <li>Breathing practices</li>
+                <li>Emotional reset kits</li>
+              </ul>
+              <a class="text-link" href="#product-showcase">查看精选产品</a>
+            </article>
+
+            <article class="feature-card feature-card--sage" id="experience-products">
+              <span class="feature-card__index">05</span>
+              <h3>体验类 / Experience</h3>
+              <p>线上线下养护体验、季节方案与内容课程，让中医成为可以参与的过程。</p>
               <ul>
                 <li>Guided wellness sessions</li>
                 <li>Herbal tasting workshops</li>
                 <li>Seasonal programs</li>
               </ul>
-              <a class="text-link" href="./my-constitution.html">先聊体质再推荐</a>
+              <a class="text-link" href="#product-showcase">查看精选产品</a>
             </article>
           </div>
         </section>
 
-        <section class="section-card">
+        <section class="section-card" id="constitution-products" hidden>
           <div class="section-heading">
             <div>
               <span class="eyebrow">九种体质</span>
-              <h2>1 种平和健康体质，8 种偏颇体质，分别对应三条产品线。</h2>
+              <h2>九种体质，各自对应睡眠、压力、消化、情绪与体验产品。</h2>
             </div>
-            <p>这部分是产品页的核心索引：先看懂体质，再进入对应购买路径。</p>
+            <p>每张卡都从体质特点出发，列出五个可以继续了解的产品方向。</p>
           </div>
 
-          <div class="profile-grid">
-            <article class="profile-card">
+          <div class="constitution-product-grid">
+            <article class="constitution-product-card" id="constitution-01">
               <span class="profile-card__badge">01</span>
               <h3>平和质【健康型】</h3>
               <p>阴阳气血均衡，面色红润、精力充沛、睡眠佳，适合维持稳定状态。</p>
-              <div class="profile-card__tags">
-                <span>饮食：均衡日常包</span>
-                <span>泡脚：轻养护包</span>
-                <span>体验：健康维持</span>
+              <div class="product-route-list">
+                <a class="product-route product-route--digestive" href="./cart.html"><span>消化</span><strong>均衡日常餐包</strong><small>轻负担的每日饮食组合</small></a>
+                <a class="product-route product-route--sleep" href="./cart.html"><span>睡眠</span><strong>安稳睡眠茶</strong><small>睡前温和饮用仪式</small></a>
+                <a class="product-route product-route--pressure" href="./cart.html"><span>压力</span><strong>日常减压饮</strong><small>给忙碌日程一个缓冲</small></a>
+                <a class="product-route product-route--emotion" href="./cart.html"><span>情绪</span><strong>平衡情绪花草茶</strong><small>维持稳定状态的陪伴</small></a>
+                <a class="product-route product-route--experience" href="./cart.html"><span>体验</span><strong>健康维持体验</strong><small>适合长期坚持的养护节奏</small></a>
               </div>
             </article>
 
-            <article class="profile-card">
+            <article class="constitution-product-card" id="constitution-02">
               <span class="profile-card__badge">02</span>
               <h3>气虚质【容易累】</h3>
               <p>元气不足，容易疲乏、气短懒言，稍微活动就出汗，恢复较慢。</p>
-              <div class="profile-card__tags">
-                <span>饮食：益气健脾</span>
-                <span>泡脚：温养补气</span>
-                <span>体验：恢复节奏</span>
+              <div class="product-route-list">
+                <a class="product-route product-route--digestive" href="./cart.html"><span>消化</span><strong>益气健脾早餐包</strong><small>给早晨一个有能量的开始</small></a>
+                <a class="product-route product-route--sleep" href="./cart.html"><span>睡眠</span><strong>午后养神茶</strong><small>为晚间休息留出缓冲</small></a>
+                <a class="product-route product-route--pressure" href="./cart.html"><span>压力</span><strong>轻负恢复饮</strong><small>适合疲惫工作日的支持</small></a>
+                <a class="product-route product-route--emotion" href="./cart.html"><span>情绪</span><strong>元气舒缓饮</strong><small>适合疲惫日常的温和陪伴</small></a>
+                <a class="product-route product-route--experience" href="./cart.html"><span>体验</span><strong>恢复节奏体验</strong><small>从轻量活动重新找回节奏</small></a>
               </div>
             </article>
 
-            <article class="profile-card">
+            <article class="constitution-product-card" id="constitution-03">
               <span class="profile-card__badge">03</span>
               <h3>阳虚质【怕冷】</h3>
               <p>阳气不足，畏寒怕冷、手脚冰凉，喜热饮，吃凉容易不舒服。</p>
-              <div class="profile-card__tags">
-                <span>饮食：温阳汤饮</span>
-                <span>泡脚：暖足驱寒</span>
-                <span>体验：冬日温养</span>
+              <div class="product-route-list">
+                <a class="product-route product-route--digestive" href="./cart.html"><span>消化</span><strong>温阳汤饮组合</strong><small>适合冷感日常的温热饮食</small></a>
+                <a class="product-route product-route--sleep" href="./cart.html"><span>睡眠</span><strong>暖身睡前茶</strong><small>把温暖带进夜间仪式</small></a>
+                <a class="product-route product-route--pressure" href="./cart.html"><span>压力</span><strong>暖心减压饮</strong><small>适合冷感与紧绷日常</small></a>
+                <a class="product-route product-route--emotion" href="./cart.html"><span>情绪</span><strong>温暖舒心饮</strong><small>冷天里的放松陪伴</small></a>
+                <a class="product-route product-route--experience" href="./cart.html"><span>体验</span><strong>冬日温养体验</strong><small>围绕季节建立保暖习惯</small></a>
               </div>
             </article>
 
-            <article class="profile-card">
+            <article class="constitution-product-card" id="constitution-04">
               <span class="profile-card__badge">04</span>
               <h3>阴虚质【怕热缺水】</h3>
               <p>阴液亏虚，手心脚心热、口干咽燥、夜间盗汗，容易心烦失眠。</p>
-              <div class="profile-card__tags">
-                <span>饮食：滋阴润燥</span>
-                <span>泡脚：睡前舒润</span>
-                <span>体验：夜间修复</span>
+              <div class="product-route-list">
+                <a class="product-route product-route--digestive" href="./cart.html"><span>消化</span><strong>滋阴润燥茶饮</strong><small>适合偏干燥日常的饮品</small></a>
+                <a class="product-route product-route--sleep" href="./cart.html"><span>睡眠</span><strong>睡前舒润茶</strong><small>给夜晚留出安静时间</small></a>
+                <a class="product-route product-route--pressure" href="./cart.html"><span>压力</span><strong>清润减压饮</strong><small>帮助缓解燥热与紧绷</small></a>
+                <a class="product-route product-route--emotion" href="./cart.html"><span>情绪</span><strong>清心舒缓饮</strong><small>帮助放慢心绪的节奏</small></a>
+                <a class="product-route product-route--experience" href="./cart.html"><span>体验</span><strong>夜间修复体验</strong><small>建立更柔和的夜间安排</small></a>
               </div>
             </article>
 
-            <article class="profile-card">
+            <article class="constitution-product-card" id="constitution-05">
               <span class="profile-card__badge">05</span>
               <h3>痰湿质【多痰肥胖】</h3>
               <p>水湿痰湿积聚，腹部松软、身体沉重困乏、口黏痰多。</p>
-              <div class="profile-card__tags">
-                <span>饮食：轻体祛湿</span>
-                <span>泡脚：健脾祛湿</span>
-                <span>体验：轻盈管理</span>
+              <div class="product-route-list">
+                <a class="product-route product-route--digestive" href="./cart.html"><span>消化</span><strong>轻体祛湿餐包</strong><small>从日常饮食减轻负担</small></a>
+                <a class="product-route product-route--sleep" href="./cart.html"><span>睡眠</span><strong>轻盈晚安茶</strong><small>睡前减少厚重感</small></a>
+                <a class="product-route product-route--pressure" href="./cart.html"><span>压力</span><strong>轻体减压饮</strong><small>让身体从忙乱中松下来</small></a>
+                <a class="product-route product-route--emotion" href="./cart.html"><span>情绪</span><strong>清爽舒压茶</strong><small>让身体和心情一起松开</small></a>
+                <a class="product-route product-route--experience" href="./cart.html"><span>体验</span><strong>轻盈管理体验</strong><small>从轻运动与节律开始</small></a>
               </div>
             </article>
 
-            <article class="profile-card">
+            <article class="constitution-product-card" id="constitution-06">
               <span class="profile-card__badge">06</span>
               <h3>湿热质【长痘出油】</h3>
               <p>湿热内蕴，面油长痘、口苦口臭、小便黄，身体有闷热感。</p>
-              <div class="profile-card__tags">
-                <span>饮食：清热利湿</span>
-                <span>泡脚：清爽排浊</span>
-                <span>体验：湿热轻调</span>
+              <div class="product-route-list">
+                <a class="product-route product-route--digestive" href="./cart.html"><span>消化</span><strong>清热利湿茶饮</strong><small>偏好清淡的日常饮品</small></a>
+                <a class="product-route product-route--sleep" href="./cart.html"><span>睡眠</span><strong>清爽晚安饮</strong><small>减少闷热感的晚间选择</small></a>
+                <a class="product-route product-route--pressure" href="./cart.html"><span>压力</span><strong>清凉减压茶</strong><small>为闷热工作日降一档</small></a>
+                <a class="product-route product-route--emotion" href="./cart.html"><span>情绪</span><strong>清心降燥茶</strong><small>为忙乱情绪留一点空间</small></a>
+                <a class="product-route product-route--experience" href="./cart.html"><span>体验</span><strong>湿热轻调体验</strong><small>围绕清淡饮食与规律作息</small></a>
               </div>
             </article>
 
-            <article class="profile-card">
+            <article class="constitution-product-card" id="constitution-07">
               <span class="profile-card__badge">07</span>
               <h3>血瘀质【长斑瘀堵】</h3>
               <p>血脉瘀滞不通，面色晦暗、容易长斑或瘀斑，局部可能刺痛。</p>
-              <div class="profile-card__tags">
-                <span>饮食：活络舒展</span>
-                <span>泡脚：温通舒络</span>
-                <span>体验：经络舒展</span>
+              <div class="product-route-list">
+                <a class="product-route product-route--digestive" href="./cart.html"><span>消化</span><strong>活络舒展餐包</strong><small>让饮食成为舒展的一部分</small></a>
+                <a class="product-route product-route--sleep" href="./cart.html"><span>睡眠</span><strong>夜间放松茶</strong><small>为身体安排慢下来的时段</small></a>
+                <a class="product-route product-route--pressure" href="./cart.html"><span>压力</span><strong>舒展减压饮</strong><small>给紧绷身体留出恢复空间</small></a>
+                <a class="product-route product-route--emotion" href="./cart.html"><span>情绪</span><strong>舒展情绪花草茶</strong><small>陪伴紧绷日常慢慢松开</small></a>
+                <a class="product-route product-route--experience" href="./cart.html"><span>体验</span><strong>经络舒展体验</strong><small>结合呼吸、伸展与节律</small></a>
               </div>
             </article>
 
-            <article class="profile-card">
+            <article class="constitution-product-card" id="constitution-08">
               <span class="profile-card__badge">08</span>
               <h3>气郁质【情绪压抑】</h3>
               <p>气机郁结，多愁善感、情绪压抑焦虑、爱叹气，容易胸闷睡差。</p>
-              <div class="profile-card__tags">
-                <span>饮食：疏肝理气</span>
-                <span>泡脚：舒郁放松</span>
-                <span>体验：呼吸户外</span>
+              <div class="product-route-list">
+                <a class="product-route product-route--digestive" href="./cart.html"><span>消化</span><strong>疏肝理气茶饮</strong><small>适合压力日常的轻饮品</small></a>
+                <a class="product-route product-route--sleep" href="./cart.html"><span>睡眠</span><strong>安心睡前茶</strong><small>为夜间思绪设置缓冲</small></a>
+                <a class="product-route product-route--pressure" href="./cart.html"><span>压力</span><strong>疏郁减压饮</strong><small>给高压情绪一个出口</small></a>
+                <a class="product-route product-route--emotion" href="./cart.html"><span>情绪</span><strong>呼吸舒缓花草茶</strong><small>配合呼吸练习放慢节奏</small></a>
+                <a class="product-route product-route--experience" href="./cart.html"><span>体验</span><strong>呼吸与户外体验</strong><small>从走出去开始重新连接自己</small></a>
               </div>
             </article>
 
-            <article class="profile-card">
+            <article class="constitution-product-card" id="constitution-09">
               <span class="profile-card__badge">09</span>
               <h3>特禀质【过敏先天】</h3>
               <p>先天禀赋特异，花粉、食物、药物或换季容易触发过敏反应。</p>
-              <div class="profile-card__tags">
-                <span>饮食：温和低敏</span>
-                <span>泡脚：舒缓防护</span>
-                <span>体验：季节防护</span>
+              <div class="product-route-list">
+                <a class="product-route product-route--digestive" href="./cart.html"><span>消化</span><strong>温和低敏饮食包</strong><small>减少选择压力的日常组合</small></a>
+                <a class="product-route product-route--sleep" href="./cart.html"><span>睡眠</span><strong>温和晚安茶</strong><small>适合建立固定的夜间仪式</small></a>
+                <a class="product-route product-route--pressure" href="./cart.html"><span>压力</span><strong>安心减压饮</strong><small>换季时减少额外负担</small></a>
+                <a class="product-route product-route--emotion" href="./cart.html"><span>情绪</span><strong>安心陪伴花草茶</strong><small>换季时给自己多一点余地</small></a>
+                <a class="product-route product-route--experience" href="./cart.html"><span>体验</span><strong>季节防护体验</strong><small>围绕环境变化提前准备</small></a>
               </div>
             </article>
           </div>
@@ -238,5 +437,6 @@
     </div>
 
     <script src="./script.js"></script>
+    <script src="./frontend-api.js"></script>
   </body>
 </html>

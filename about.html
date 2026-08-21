@@ -43,7 +43,7 @@
       </header>
 
       <main class="page-main">
-        <section class="page-hero">
+        <section class="page-hero" id="about-overview">
           <div class="page-hero__panel">
             <span class="eyebrow">关于我们</span>
             <h1>我们在做的，是把中药理念做成海外用户愿意理解、愿意尝试的品牌体验。</h1>
@@ -54,6 +54,7 @@
           </div>
 
           <div class="page-hero__panel page-hero__panel--soft">
+            <div class="about-hero-media" data-media-slot="about.hero" aria-label="关于我们展示图片"></div>
             <div class="trust-row">
               <span>Clear explanations</span>
               <span>Chat-first guidance</span>
@@ -66,7 +67,7 @@
           </div>
         </section>
 
-        <section class="section-card">
+        <section class="section-card" id="brand-trust">
           <div class="section-heading">
             <div>
               <span class="eyebrow">品牌故事 / 团队 / 信任</span>
@@ -76,17 +77,17 @@
           </div>
 
           <div class="about-grid">
-            <article class="about-card">
+            <article class="about-card" id="brand-story">
               <h3>Brand story</h3>
               <p>我们相信中医不该只停留在术语里，而应该变成海外用户也能读懂、能尝试的日常支持方式。</p>
             </article>
 
-            <article class="about-card">
+            <article class="about-card" id="team">
               <h3>Team</h3>
               <p>品牌、内容、产品与体验协同工作，把平和质与八种偏颇体质整理成更清晰的产品路径。</p>
             </article>
 
-            <article class="about-card">
+            <article class="about-card" id="trust">
               <h3>Trust</h3>
               <p>以聊天式体质入口、透明推荐和简洁结算路径建立信任，而不是先讲概念。</p>
             </article>
@@ -103,5 +104,6 @@
     </div>
 
     <script src="./script.js"></script>
+    <script src="./frontend-api.js"></script>
   </body>
 </html>

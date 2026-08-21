@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我的账户 | SinoHerb</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./account.css" />
+  </head>
+  <body class="account-page">
+    <div class="page">
+      <div class="announcement"><p>先聊体质，再找到适合你的日常方案</p><a href="./my-constitution.html">开始对话</a></div>
+      <header class="site-header">
+        <a class="brand" href="./index.html" aria-label="SinoHerb 首页"><span class="brand-mark">S</span><span class="brand-copy"><strong>SinoHerb</strong><span>TCM wellness for overseas users</span></span></a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="./index.html">首页</a><a href="./products.html">产品</a><a href="./philosophy.html">理念</a><a href="./my-constitution.html">我的体质</a><a href="./about.html">关于我们</a>
+          <a class="cart-button" href="./cart.html"><span>Cart</span><span class="cart-button__badge">3</span></a>
+        </nav>
+      </header>
+
+      <main class="account-main">
+        <section class="account-intro"><span class="eyebrow">SinoHerb account</span><h1>把你的体质路径，留在自己的账户里。</h1><p>注册后可以更方便地回到产品推荐、订单和后续服务。邮箱或手机号任选其一即可。</p></section>
+        <section class="account-card" id="accountCard">
+          <div class="account-tabs" role="tablist" aria-label="账户操作"><button type="button" class="is-active" data-account-mode="login">登录</button><button type="button" data-account-mode="register">注册</button></div>
+          <div class="account-message" id="accountMessage" role="alert"></div>
+          <form id="accountForm" class="account-form">
+            <label>邮箱（可选）<input name="email" type="email" autocomplete="email" placeholder="you@example.com" /></label>
+            <label>手机号（可选）<input name="phone" type="tel" autocomplete="tel" placeholder="+86 138 0000 0000" /></label>
+            <p class="account-form__hint" data-register-only>邮箱或手机号至少填写一个</p>
+            <label class="account-name" data-register-only>昵称（可选）<input name="name" autocomplete="name" maxlength="120" placeholder="怎么称呼你" /></label>
+            <label>密码<input name="password" type="password" autocomplete="current-password" minlength="12" required placeholder="至少 12 位" /></label>
+            <button class="button button--primary" type="submit" id="accountSubmit">登录账户</button>
+          </form>
+          <p class="account-note">我们不会展示或分享你的密码。健康信息仅用于提供更清晰的产品与服务体验。</p>
+        </section>
+        <section class="account-profile" id="accountProfile" hidden><span class="eyebrow">Your account</span><h2>欢迎回来，<span id="accountName">朋友</span></h2><div class="account-profile__details" id="accountDetails"></div><div class="account-profile__actions"><a class="button button--primary" href="./products.html">查看产品</a><a class="button button--ghost" href="./my-constitution.html">继续体质对话</a><button class="button button--quiet" type="button" id="accountLogout">退出登录</button></div></section>
+      </main>
+    </div>
+    <script src="./script.js"></script>
+    <script src="./account.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 430">
+  <rect width="520" height="430" fill="#e7d7d4"/>
+  <g fill="none" stroke="#526c55" stroke-width="4">
+    <path d="M103 414c35-156 72-275 151-382"/>
+    <path d="M151 292c-75-28-66-114-55-156 67 30 94 88 55 156Z" fill="#a7b89a"/>
+    <path d="M201 178c-39-71 21-121 61-145 20 67-3 119-61 145Z" fill="#78916f"/>
+  </g>
+  <g fill="#a65f4b"><circle cx="150" cy="184" r="13"/><circle cx="174" cy="166" r="10"/></g>
+  <rect x="275" y="76" width="204" height="274" fill="#fff9f0"/>
+  <text x="302" y="120" fill="#294b3a" font-family="Georgia, serif" font-size="19">BODY PATTERN</text>
+  <path d="M302 139h86" stroke="#c19e63"/>
+  <text x="302" y="185" fill="#657168" font-family="Arial, sans-serif" font-size="15">Read the signal</text>
+  <text x="302" y="231" fill="#657168" font-family="Arial, sans-serif" font-size="15">Find the pattern</text>
+  <text x="302" y="277" fill="#657168" font-family="Arial, sans-serif" font-size="15">Build the routine</text>
+  <circle cx="443" cy="314" r="20" fill="#dbe7d8"/>
+  <path d="M436 314h14M443 307v14" stroke="#294b3a"/>
+</svg>

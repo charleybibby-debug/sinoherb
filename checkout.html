@@ -46,12 +46,12 @@
         <span class="eyebrow">结算页 / checkout</span>
         <h1>确认你的方案，再完成下单。</h1>
         <p class="lead">
-          这里是静态结算示意，后续可以接支付、物流与账号系统。现在先把购买路径跑通。
+          提交订单后，我们会人工联系你确认付款与配送。
         </p>
       </section>
 
       <div class="checkout-layout">
-        <form class="checkout-form">
+          <form class="checkout-form" id="checkoutForm">
           <div>
             <span class="eyebrow">Shipping</span>
             <h2>配送信息</h2>
@@ -60,15 +60,15 @@
           <div class="checkout-grid">
             <label class="checkout-field">
               <span>First name</span>
-              <input type="text" placeholder="Alex" />
+              <input type="text" name="firstName" placeholder="Alex" required />
             </label>
             <label class="checkout-field">
               <span>Last name</span>
-              <input type="text" placeholder="Wong" />
+              <input type="text" name="lastName" placeholder="Wong" required />
             </label>
             <label class="checkout-field">
               <span>Email</span>
-              <input type="email" placeholder="alex@example.com" />
+              <input type="email" name="email" placeholder="alex@example.com" />
             </label>
             <label class="checkout-field">
               <span>Country / Region</span>
@@ -79,11 +79,15 @@
                 <option>Australia</option>
               </select>
             </label>
+            <label class="checkout-field">
+              <span>Phone</span>
+              <input type="tel" name="phone" placeholder="+1 555 000 0000" required />
+            </label>
           </div>
 
           <label class="checkout-field">
             <span>Address</span>
-            <input type="text" placeholder="Street address" />
+              <input type="text" name="address" placeholder="Street address" required />
           </label>
 
           <div class="checkout-grid">
@@ -99,10 +103,11 @@
 
           <label class="checkout-field">
             <span>Notes</span>
-            <textarea placeholder="Any delivery notes or health considerations..."></textarea>
+              <textarea name="notes" placeholder="Any delivery notes or health considerations..."></textarea>
           </label>
 
-          <button class="button button--primary" type="button">Place order</button>
+          <button class="button button--primary" type="submit">提交待联系订单</button>
+          <p id="checkoutMessage" role="status"></p>
         </form>
 
         <aside class="checkout-summary">
@@ -111,38 +116,17 @@
             <h2>你的购物车</h2>
           </div>
 
-          <div class="checkout-summary__items">
-            <article class="checkout-summary__item">
-              <div class="checkout-summary__line">
-                <strong>Calm Tea Blend</strong>
-                <span>$24</span>
-              </div>
-              <p>饮食产品 · 气郁质</p>
-            </article>
-            <article class="checkout-summary__item">
-              <div class="checkout-summary__line">
-                <strong>Night Foot Soak</strong>
-                <span>$32</span>
-              </div>
-              <p>泡脚产品 · 阴虚质</p>
-            </article>
-            <article class="checkout-summary__item">
-              <div class="checkout-summary__line">
-                <strong>Experience Pass</strong>
-                <span>$18</span>
-              </div>
-              <p>体验类产品 · 血瘀质</p>
-            </article>
-          </div>
+          <div class="checkout-summary__items" id="checkoutItems"><p>正在加载购物车…</p></div>
 
-          <div class="checkout-summary__line">
+          <div class="checkout-summary__line" id="checkoutTotal">
             <span>Subtotal</span>
-            <strong>$74</strong>
+            <strong>$0.00</strong>
           </div>
 
-          <p class="lead">后续可在这里接入真实支付、税费、物流和订单状态。</p>
+          <p class="lead">首期订单提交后由工作人员联系确认，不在线收款。</p>
         </aside>
       </div>
     </div>
+    <script src="./frontend-api.js"></script>
   </body>
 </html>

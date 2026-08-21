@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 220">
+  <rect width="520" height="220" fill="#dbe7d8"/>
+  <rect width="288" height="220" fill="#a8b7a1"/>
+  <circle cx="88" cy="78" r="32" fill="#d2a287"/>
+  <path d="M38 220c5-79 22-106 52-106s47 27 52 106Z" fill="#f0e7da"/>
+  <circle cx="208" cy="78" r="32" fill="#c9957b"/>
+  <path d="M158 220c5-79 22-106 52-106s47 27 52 106Z" fill="#d9c4a6"/>
+  <path d="M146 34v152" stroke="#f5eee5" stroke-dasharray="5 7"/>
+  <text x="330" y="65" fill="#294b3a" font-family="Georgia, serif" font-size="23">辨证施养</text>
+  <path d="M330 84h70" stroke="#b78a52"/>
+  <text x="330" y="118" fill="#667169" font-family="Arial, sans-serif" font-size="15">同样“睡不好”</text>
+  <text x="330" y="150" fill="#667169" font-family="Arial, sans-serif" font-size="15">也可能需要不同方向</text>
+</svg>

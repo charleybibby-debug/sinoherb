@@ -38,7 +38,13 @@
           <a href="./philosophy.html">理念</a>
           <a href="./my-constitution.html">我的体质</a>
           <a href="./about.html">关于我们</a>
-          <a class="cart-button" href="./cart.html">
+          <a
+            class="cart-button"
+            href="./cart.html"
+            data-open-cart
+            aria-controls="cartDrawer"
+            aria-expanded="false"
+          >
             <span>Cart</span>
             <span class="cart-button__badge">3</span>
           </a>
@@ -46,7 +52,7 @@
       </header>
 
       <main class="page-main">
-        <section class="hero section-card">
+        <section class="hero section-card" id="home-overview">
           <div class="hero__copy">
             <span class="eyebrow">海外中医独立站 / Premium herbal wellness</span>
             <h1>把中医体质，<br />翻译成海外用户看得懂的<br />日常方案。</h1>
@@ -68,7 +74,7 @@
             </div>
           </div>
 
-          <div class="hero__visual" aria-hidden="true">
+          <div class="hero__visual" data-media-slot="home.hero" aria-hidden="true">
             <div class="hero__visual-card hero__visual-card--large">
               <div class="hero__orb hero__orb--one"></div>
               <div class="hero__orb hero__orb--two"></div>
@@ -142,48 +148,138 @@
           </div>
         </section>
 
-        <section class="section-card">
-          <div class="section-heading">
-            <div>
-              <span class="eyebrow">导航入口</span>
-              <h2>每个导航都拆成独立页面，方便海外用户一步一步看懂。</h2>
+        <section class="ancient-wisdom section-card" id="ancient-wisdom" aria-labelledby="ancientWisdomTitle">
+          <div class="ancient-wisdom__intro">
+            <span class="eyebrow">Ancient wisdom, made everyday</span>
+            <h2 id="ancientWisdomTitle">五千年的古代智慧</h2>
+            <p>
+              几个世纪以来，传统草药一直被用来支持身体的平衡。我们从经典经验中汲取灵感，
+              用更清楚、更温和的方式，把它放进今天的生活里。
+            </p>
+          </div>
+
+          <div class="ancient-wisdom__heading">
+            <h3>强效草药，根治病根。</h3>
+            <div class="ancient-wisdom__controls" aria-label="草药卡片切换">
+              <button type="button" data-wisdom-prev aria-label="查看上一组草药">←</button>
+              <button type="button" data-wisdom-next aria-label="查看下一组草药">→</button>
             </div>
-            <p>首页只做总览，其他信息分别放到产品、理念、我的体质、关于我们和购物车里。</p>
           </div>
 
-          <div class="category-grid">
-            <article class="feature-card feature-card--sage">
-              <span class="feature-card__index">01</span>
-              <h3>产品</h3>
-              <p>饮食、泡脚、体验三类产品入口，按体质找支持方式。</p>
-              <a class="text-link" href="./products.html">进入产品页</a>
-            </article>
-
-            <article class="feature-card feature-card--blush">
-              <span class="feature-card__index">02</span>
-              <h3>理念</h3>
-              <p>用海外用户能看懂的方式解释中医体质，不先讲术语。</p>
-              <a class="text-link" href="./philosophy.html">进入理念页</a>
-            </article>
-
-            <article class="feature-card feature-card--gold">
-              <span class="feature-card__index">03</span>
-              <h3>我的体质</h3>
-              <p>聊天式体质入口，先给出最接近的体质结果与推荐方案。</p>
-              <a class="text-link" href="./my-constitution.html">进入对话页</a>
-            </article>
-          </div>
-
-          <div class="trust-row">
-            <span>关于我们</span>
-            <span>购物车</span>
-            <span>结算页</span>
-            <span>右侧抽屉式概念已改为独立购物车页面</span>
+          <div class="wisdom-carousel" data-wisdom-carousel>
+            <div class="wisdom-carousel__track" data-wisdom-track>
+              <article class="wisdom-card wisdom-card--angelica" data-media-slot="home.wisdom.angelica">
+                <div class="wisdom-card__art"><span>当归</span><small>ANGELICA</small></div>
+                <div class="wisdom-card__body"><h4>当归</h4><ul><li>月经规律性</li><li>女性日常平衡</li><li>情绪支持</li></ul></div>
+              </article>
+              <article class="wisdom-card wisdom-card--peony" data-media-slot="home.wisdom.peony">
+                <div class="wisdom-card__art"><span>白芍</span><small>PEONY ROOT</small></div>
+                <div class="wisdom-card__body"><h4>白芍根</h4><ul><li>月经和谐</li><li>放松身心</li><li>自然放松</li></ul></div>
+              </article>
+              <article class="wisdom-card wisdom-card--motherwort" data-media-slot="home.wisdom.motherwort">
+                <div class="wisdom-card__art"><span>益母草</span><small>MOTHERWORT</small></div>
+                <div class="wisdom-card__body"><h4>益母草</h4><ul><li>月经和谐</li><li>松弛身体</li><li>情绪稳定性</li></ul></div>
+              </article>
+              <article class="wisdom-card wisdom-card--gardenia" data-media-slot="home.wisdom.gardenia">
+                <div class="wisdom-card__art"><span>栀子花</span><small>GARDENIA</small></div>
+                <div class="wisdom-card__body"><h4>栀子花荚</h4><ul><li>肌肤清透</li><li>张力支撑</li><li>情绪平衡</li></ul></div>
+              </article>
+              <article class="wisdom-card wisdom-card--poria" data-media-slot="home.wisdom.poria">
+                <div class="wisdom-card__art"><span>茯苓</span><small>PORIA</small></div>
+                <div class="wisdom-card__body"><h4>茯苓</h4><ul><li>轻盈消化</li><li>稳定节奏</li><li>日常恢复</li></ul></div>
+              </article>
+              <article class="wisdom-card wisdom-card--schisandra" data-media-slot="home.wisdom.schisandra">
+                <div class="wisdom-card__art"><span>五味子</span><small>SCHISANDRA</small></div>
+                <div class="wisdom-card__body"><h4>五味子</h4><ul><li>能量支持</li><li>安稳睡眠</li><li>适应力支持</li></ul></div>
+              </article>
+            </div>
           </div>
         </section>
+
+        <section class="personal-formula section-card" aria-labelledby="personalFormulaTitle">
+          <div class="personal-formula__visual" aria-hidden="true">
+            <span class="formula-herb formula-herb--one">当归</span>
+            <span class="formula-herb formula-herb--two">茯苓</span>
+            <span class="formula-herb formula-herb--three">陈皮</span>
+            <span class="formula-herb formula-herb--four">白芍</span>
+            <div class="formula-bowl"><span>每日配方</span></div>
+            <div class="formula-dropper"><span>SinoHerb</span><small>PERSONAL BLEND</small></div>
+          </div>
+
+          <div class="personal-formula__copy">
+            <span class="eyebrow">Personalized herbal support</span>
+            <h2 id="personalFormulaTitle">针对你的体质与生活节奏，建立个性化草本方案</h2>
+            <p class="lead">SinoHerb 用现代、清晰的方式整理传统体质思路，帮助你从身体感受走向可以执行的日常支持。</p>
+
+            <ol class="formula-steps">
+              <li><span>1</span><div><h3>完成日常评估</h3><p>从睡眠、压力、消化与情绪等生活感受开始。</p></div></li>
+              <li><span>2</span><div><h3>找到接近的体质方向</h3><p>通过结构化问题整理可能影响当前状态的身体模式。</p></div></li>
+              <li><span>3</span><div><h3>获得专属支持路径</h3><p>从产品、使用方式和生活节奏中，组合出更容易坚持的方案。</p></div></li>
+            </ol>
+
+            <div class="formula-support">
+              <strong>个性化方案可覆盖：</strong>
+              <div><span>睡眠节奏</span><span>压力恢复</span><span>消化支持</span><span>情绪平衡</span><span>日常能量</span><span>周期记录</span></div>
+            </div>
+            <a class="button button--primary" href="./my-constitution.html">探索我的方案</a>
+          </div>
+        </section>
+
+        <section class="evidence-section section-card" aria-labelledby="evidenceTitle">
+          <div class="evidence-section__intro">
+            <span class="eyebrow">Transparent evaluation</span>
+            <h2 id="evidenceTitle">把体验记录下来，把结果解释清楚</h2>
+            <p>我们不使用未经验证的医疗承诺。SinoHerb 以透明配方、连续记录和可理解的生活指标，帮助用户观察自己的变化。</p>
+          </div>
+
+          <div class="evidence-sources">
+            <article><span class="evidence-sources__mark">01</span><div><strong>配方信息透明</strong><p>每一种草本的来源、使用方式与注意事项都清楚展示。</p></div></article>
+            <article><span class="evidence-sources__mark">02</span><div><strong>持续记录体验</strong><p>围绕睡眠、压力、消化与情绪建立可追踪的日常记录。</p></div></article>
+          </div>
+
+          <p class="evidence-section__caption">一条可以持续观察的健康路径</p>
+          <div class="evidence-stats">
+            <article><strong>3</strong><p>步聊天式体质评估，从身体感受出发。</p></article>
+            <article><strong>28</strong><p>天日常支持周期，帮助建立稳定记录。</p></article>
+            <article><strong>9</strong><p>种体质方向，连接睡眠、压力、消化、情绪与体验。</p></article>
+          </div>
+
+          <div class="evidence-symptoms" aria-label="可观察的生活指标">
+            <strong>可观察的生活指标</strong>
+            <div><span>睡眠质量</span><span>压力感受</span><span>消化节奏</span><span>身体能量</span><span>情绪变化</span><span>周期记录</span><span>皮肤状态</span><span>恢复速度</span></div>
+          </div>
+          <p class="evidence-disclaimer">本页面仅用于健康生活方式展示，不替代医疗诊断、治疗或专业建议。</p>
+        </section>
+
+        <section class="expert-guidance section-card" aria-labelledby="expertGuidanceTitle">
+          <div class="expert-guidance__visual" aria-hidden="true">
+            <div class="guidance-screen"><span>Weekly check-in</span><strong>身体感受记录</strong><small>睡眠 · 压力 · 消化 · 情绪</small></div>
+            <div class="guidance-person guidance-person--advisor"><span>顾问</span></div>
+            <div class="guidance-person guidance-person--member"><span>你</span></div>
+            <div class="guidance-table"><span></span><span></span><span></span></div>
+          </div>
+
+          <div class="expert-guidance__copy">
+            <span class="eyebrow">Personal guidance</span>
+            <h2 id="expertGuidanceTitle">个性化辅导，让方案更容易坚持</h2>
+
+            <div class="guidance-list">
+              <section><h3>一对一健康指导</h3><ul><li>围绕体质方向提供个性化生活建议</li><li>学习如何使用产品并建立固定节奏</li><li>根据阶段性反馈调整日常方案</li></ul></section>
+              <section><h3>小组陪伴与知识分享</h3><ul><li>围绕常见生活问题进行主题问答</li><li>获取更实用的坚持技巧</li><li>分享进展，在社区中互相学习</li></ul></section>
+            </div>
+
+            <div class="expert-guidance__actions">
+              <a class="button button--primary" href="./my-constitution.html">探索我的方案</a>
+              <a class="button button--ghost" href="./about.html">了解指导方式</a>
+            </div>
+          </div>
+        </section>
+
       </main>
+
     </div>
 
     <script src="./script.js"></script>
+    <script src="./frontend-api.js"></script>
   </body>
 </html>

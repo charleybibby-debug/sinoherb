@@ -43,47 +43,17 @@
       </header>
 
       <main class="page-main">
-        <section class="page-hero">
-          <div class="page-hero__panel page-hero__panel--soft">
-            <span class="eyebrow">我的体质</span>
-            <h1>像聊天一样，找到你更接近的中医体质。</h1>
-            <p class="lead">
-              不用表单。用户只需要在对话里选择更像自己的表达，页面会先给出
-              1 种平和质或 8 种偏颇体质中最接近的一类，并同步推荐饮食、泡脚和体验方案。
-            </p>
-            <div class="hero__actions">
-              <a class="button button--primary" href="#constitutionChat">进入对话</a>
-              <a class="button button--ghost" href="./products.html">先看产品</a>
-            </div>
-          </div>
-
-          <div class="page-hero__panel">
-            <div class="mini-chat-preview" aria-hidden="true">
-              <div class="chat-message chat-message--assistant">
-                <span>SinoHerb</span>
-                <p>最近身体最明显的信号是什么？</p>
-              </div>
-              <div class="chat-message chat-message--user">
-                <p>我容易疲乏，稍微活动就出汗。</p>
-              </div>
-              <div class="chat-message chat-message--assistant">
-                <span>SinoHerb</span>
-                <p>我会把它翻译成体质倾向，再给你日常方案。</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section class="section-card" id="constitutionChat">
           <div class="section-heading">
             <div>
               <span class="eyebrow">BODY CONVERSATION</span>
-              <h2>聊天式体质入口，为后续接入大模型预留位置。</h2>
+              <h2>通过三步对话，找到更接近你的体质方向。</h2>
             </div>
-            <p>现在先用本地规则模拟顾问对话；以后可以把同一个对话框接到大模型。</p>
+            <p>在左侧完成对话后，右侧会一次性生成体质检测结果与日常建议。</p>
           </div>
+          <div class="constitution-media-hint" data-media-slot="constitution.chat" aria-label="体质检测引导图片"></div>
 
-          <div class="chat-layout">
+          <div class="chat-layout" aria-label="体质对话与检测结果">
             <section class="chat-card" aria-label="体质聊天对话框">
               <div class="chat-card__head">
                 <div>
@@ -95,7 +65,18 @@
 
               <div class="chat-transcript" id="chatTranscript" aria-live="polite"></div>
 
-              <div class="chat-replies" id="chatReplies" aria-label="可选择的回复"></div>
+              <form class="chat-composer" id="chatComposer">
+                <label class="sr-only" for="chatInput">输入你的回答</label>
+                <textarea
+                  id="chatInput"
+                  name="message"
+                  rows="2"
+                  maxlength="300"
+                  placeholder="描述你的身体感受…"
+                  autocomplete="off"
+                ></textarea>
+                <button type="submit" aria-label="发送消息">发送</button>
+              </form>
 
               <div class="chat-actions">
                 <button class="button button--ghost" type="button" id="chatRestart">重新开始</button>
@@ -103,13 +84,14 @@
               </div>
             </section>
 
-            <aside class="result-card result-card--chat" id="chatResult" aria-live="polite">
-              <span class="result-card__label">体质结果</span>
+            <aside class="result-card result-card--chat is-waiting" id="chatResult" aria-live="polite">
+              <span class="result-card__label">体质检测结果</span>
               <div class="result-card__panel">
+                <div class="constitution-result-media" data-media-slot="constitution.result" aria-label="体质检测结果图片"></div>
                 <p class="result-card__type">等待你开始对话。</p>
                 <h3>系统会先给你一个最接近的体质判断。</h3>
                 <p class="result-card__summary">
-                  这里以后可以接大模型，输出体质类型、可理解解释、推荐方案和购买入口。
+                  这里会根据你的对话生成体质方向、可理解解释、推荐方案和安全提示。
                 </p>
                 <div class="result-card__chips">
                   <span>饮食产品</span>
@@ -120,9 +102,130 @@
             </aside>
           </div>
         </section>
+
+        <section class="constitution-faq" id="constitutionFaq" aria-labelledby="constitutionFaqTitle">
+          <header class="constitution-faq__header">
+            <span class="eyebrow">FAQ</span>
+            <h2 id="constitutionFaqTitle">关于体质检测，你可能还想知道</h2>
+            <p>从检测方式、产品选择到安全边界，这里整理了开始前最常见的问题。</p>
+          </header>
+
+          <div class="constitution-faq__layout">
+            <nav class="constitution-faq__nav" aria-label="FAQ 分类">
+              <a class="is-active" href="#faq-assessment">体质检测</a>
+              <a href="#faq-products">产品与使用</a>
+              <a href="#faq-safety">安全与服务</a>
+            </nav>
+
+            <div class="constitution-faq__content">
+              <section class="constitution-faq__group" id="faq-assessment" aria-labelledby="faqAssessmentTitle">
+                <h3 id="faqAssessmentTitle">体质检测</h3>
+
+                <details class="constitution-faq__item" open>
+                  <summary>
+                    这个体质检测是如何判断结果的？
+                    <span aria-hidden="true"></span>
+                  </summary>
+                  <p>
+                    页面会结合你在三轮对话中描述的冷热、精力、睡眠、消化、皮肤与情绪等日常信号，匹配更接近的体质方向。结果用于帮助理解当前状态，不是医疗诊断。
+                  </p>
+                </details>
+
+                <details class="constitution-faq__item">
+                  <summary>
+                    九种体质分别指什么？
+                    <span aria-hidden="true"></span>
+                  </summary>
+                  <p>
+                    九种体质包括平和质，以及气虚、阳虚、阴虚、痰湿、湿热、血瘀、气郁和特禀八种偏颇体质。每种体质关注的身体倾向不同，也可能随生活状态发生变化。
+                  </p>
+                </details>
+
+                <details class="constitution-faq__item">
+                  <summary>
+                    检测结果准确吗？
+                    <span aria-hidden="true"></span>
+                  </summary>
+                  <p>
+                    结果取决于你提供的信息，只适合作为日常健康管理的参考方向。如果身体感受持续、明显或影响生活，请向合格的医疗专业人士咨询。
+                  </p>
+                </details>
+              </section>
+
+              <section class="constitution-faq__group" id="faq-products" aria-labelledby="faqProductsTitle">
+                <h3 id="faqProductsTitle">产品与使用</h3>
+
+                <details class="constitution-faq__item">
+                  <summary>
+                    检测结果如何帮助我选择产品？
+                    <span aria-hidden="true"></span>
+                  </summary>
+                  <p>
+                    结果会提供对应的体质入口，你可以在产品页继续筛选睡眠、压力、消化、情绪与体验等支持方向，再根据当下最需要改善的生活场景进行选择。
+                  </p>
+                </details>
+
+                <details class="constitution-faq__item">
+                  <summary>
+                    如果我同时接近多种体质怎么办？
+                    <span aria-hidden="true"></span>
+                  </summary>
+                  <p>
+                    多种倾向同时出现很常见。当前页面会优先显示信号更集中的方向，建议先从最明显、最影响日常的感受开始，并避免一次叠加过多产品。
+                  </p>
+                </details>
+
+                <details class="constitution-faq__item">
+                  <summary>
+                    我可以重新进行体质检测吗？
+                    <span aria-hidden="true"></span>
+                  </summary>
+                  <p>
+                    可以。点击对话区的“重新开始”即可再次检测。当作息、季节、压力或身体感受发生明显变化时，也可以重新描述当前状态。
+                  </p>
+                </details>
+              </section>
+
+              <section class="constitution-faq__group" id="faq-safety" aria-labelledby="faqSafetyTitle">
+                <h3 id="faqSafetyTitle">安全与服务</h3>
+
+                <details class="constitution-faq__item">
+                  <summary>
+                    体质检测可以代替医生诊断吗？
+                    <span aria-hidden="true"></span>
+                  </summary>
+                  <p>
+                    不可以。体质检测和页面内容只用于一般信息与日常生活方式参考，不能诊断、治疗、治愈或预防疾病，也不能替代医生或其他医疗专业人士的意见。
+                  </p>
+                </details>
+
+                <details class="constitution-faq__item">
+                  <summary>
+                    使用草本、茶饮或泡脚产品前要注意什么？
+                    <span aria-hidden="true"></span>
+                  </summary>
+                  <p>
+                    请先查看完整成分与使用说明。孕期、哺乳期、正在服药、患有慢性疾病或有明确过敏史的人群，应在使用前咨询医生或药师。
+                  </p>
+                </details>
+
+                <details class="constitution-faq__item">
+                  <summary>
+                    如果我对结果或产品仍有疑问怎么办？
+                    <span aria-hidden="true"></span>
+                  </summary>
+                  <p>
+                    你可以重新进行对话，补充更具体的身体感受，也可以先查看产品详情中的成分、适用场景和使用说明；涉及健康风险的问题应优先咨询专业人士。
+                  </p>
+                </details>
+              </section>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
 
     <script src="./script.js"></script>
+    <script src="./frontend-api.js"></script>
   </body>
 </html>
