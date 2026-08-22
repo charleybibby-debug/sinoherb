@@ -27,6 +27,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 [data-media-slot]:not(img) {
   position: relative;
 }
@@ -2743,6 +2747,82 @@ body.cart-open .drawer-backdrop {
   resize: vertical;
 }
 
+.checkout-payment {
+  display: grid;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+.checkout-payment__card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid rgba(33, 49, 38, 0.12);
+  border-radius: 18px;
+  background: #fffdfa;
+}
+
+.checkout-payment__card--paypal {
+  border: 2px solid var(--heading);
+  background: rgba(255, 250, 244, 0.98);
+}
+
+.checkout-payment__card--paypal[data-state="disabled"] {
+  border-color: rgba(33, 49, 38, 0.18);
+}
+
+.checkout-payment__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.checkout-payment__heading span {
+  color: var(--heading);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.checkout-payment__or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.checkout-payment__or::before,
+.checkout-payment__or::after {
+  flex: 1;
+  height: 1px;
+  background: rgba(33, 49, 38, 0.12);
+  content: "";
+}
+
+.checkout-payment__status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.checkout-payment__status[data-state="error"],
+#checkoutMessage[data-state="error"] {
+  color: #9b3f36;
+}
+
+#checkoutMessage[data-state="success"] {
+  color: var(--heading);
+}
+
+#paypalButtons {
+  min-height: 45px;
+}
+
+.checkout-form[aria-busy="true"] {
+  opacity: 0.78;
+}
+
 .checkout-summary {
   display: grid;
   gap: 16px;
@@ -2765,6 +2845,35 @@ body.cart-open .drawer-backdrop {
   padding: 14px;
   border-radius: 18px;
   background: rgba(241, 234, 223, 0.55);
+}
+
+.order-confirmation {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+  width: min(100%, 760px);
+  margin: 56px auto 0;
+  padding: clamp(28px, 6vw, 64px);
+  border: 1px solid rgba(33, 49, 38, 0.1);
+  border-radius: var(--radius-xl);
+  background: rgba(255, 250, 244, 0.96);
+  box-shadow: var(--shadow);
+}
+
+.order-confirmation h1,
+.order-confirmation p {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .checkout-payment__heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .checkout-payment__card {
+    padding: 15px;
+  }
 }
 
 @media (max-width: 1200px) {

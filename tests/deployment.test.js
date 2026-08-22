@@ -27,3 +27,23 @@ test("media migration defines stable slots and compose persists uploads", () => 
   assert.match(compose, /sinoherb-media/);
   assert.match(read("Dockerfile"), /migrate-media\.js/);
 });
+
+test("payment migration defines PayPal state and runs before startup", () => {
+  const paymentMigration = read("db/006_paypal_payments.sql");
+  assert.match(paymentMigration, /paypal_webhook_events/);
+  assert.match(paymentMigration, /payment_status/);
+  assert.match(paymentMigration, /stock_released_at/);
+  assert.match(read("Dockerfile"), /migrate-payments\.js.*server\/app\.js/);
+});
+
+test("PayPal setup docs cover Sandbox, Webhooks, Live, and refunds", () => {
+  const paypalDocs = read("docs/paypal-setup.md");
+  assert.match(paypalDocs, /Sandbox Business/);
+  assert.match(paypalDocs, /Sandbox Personal/);
+  assert.match(paypalDocs, /PAYMENT\.CAPTURE\.COMPLETED/);
+  assert.match(paypalDocs, /PAYMENT\.CAPTURE\.REFUNDED/);
+  assert.match(paypalDocs, /PAYPAL_ENV=live/);
+  assert.match(paypalDocs, /HTTPS/);
+  assert.match(paypalDocs, /最小金额真实交易/);
+  assert.match(paypalDocs, /PayPal 后台退款/);
+});

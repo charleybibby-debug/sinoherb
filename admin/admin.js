@@ -9,9 +9,11 @@ const request = async (path, options = {}) => {
 
 const escapeText = (value) => String(value ?? "").replace(/[&<>\"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" })[character]);
 const statusLabel = (status) => ({ active: "已上架", archived: "已下架", draft: "草稿" }[status] || "未知状态");
-const orderStatusLabel = (status) => ({ pending_contact: "待联系", contacted: "已联系", confirmed: "已确认", completed: "已完成", cancelled: "已取消" }[status] || status || "未知");
+const orderStatusLabel = (status) => ({ pending_payment: "待支付", pending_contact: "待联系", contacted: "已联系", confirmed: "已确认", completed: "已完成", cancelled: "已取消" }[status] || status || "未知");
+const paymentMethodLabel = (value) => ({ paypal: "PayPal", manual: "人工联系" }[value] || "未知");
+const paymentStatusLabel = (value) => ({ pending: "待支付", paid: "已付款", unpaid: "未付款", failed: "失败", refunded: "已退款" }[value] || "未知");
 const dateLabel = (value) => value ? new Intl.DateTimeFormat("zh-CN", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }).format(new Date(value)) : "—";
-const moneyLabel = (cents) => new Intl.NumberFormat("zh-CN", { style: "currency", currency: "CNY", maximumFractionDigits: 0 }).format((Number(cents) || 0) / 100);
+const moneyLabel = (cents) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format((Number(cents) || 0) / 100);
 
 const loginPanel = document.querySelector("#adminLoginPanel");
 const appPanel = document.querySelector("#adminAppPanel");
@@ -79,13 +81,14 @@ function renderProductPulse() {
 function renderOrders() {
   const target = document.querySelector("#adminOrdersTable");
   if (!orders.length) {
-    target.innerHTML = `<tr><td colspan="6"><p class="admin-empty">暂时没有订单。</p></td></tr>`;
+    target.innerHTML = `<tr><td colspan="7"><p class="admin-empty">暂时没有订单。</p></td></tr>`;
     return;
   }
   target.innerHTML = orders.map((order) => `<tr>
     <td><strong>${escapeText(order.orderNumber)}</strong></td>
     <td><span class="admin-table-primary">${escapeText(order.customerName || "未填写姓名")}</span><span class="admin-table-secondary">${escapeText(order.phone || order.email || "未填写联系方式")}</span></td>
     <td>${moneyLabel(order.subtotalCents)}</td>
+    <td><span class="admin-table-primary">${paymentMethodLabel(order.paymentMethod)}</span><span class="admin-table-secondary">${paymentStatusLabel(order.paymentStatus)}</span></td>
     <td>${dateLabel(order.createdAt)}</td>
     <td><span class="admin-order-status admin-order-status--${escapeText(order.status)}">${orderStatusLabel(order.status)}</span></td>
     <td>${order.status === "pending_contact" ? `<button class="admin-table-action" type="button" data-order-contact="${escapeText(order.id)}">标记已联系</button>` : "<span class=\"admin-table-muted\">—</span>"}</td>

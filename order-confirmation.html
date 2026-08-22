@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SinoHerb | Payment Confirmation</title>
+    <meta name="description" content="查看 SinoHerb 订单付款确认结果。" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="checkout-page confirmation-page">
+    <div class="checkout-shell">
+      <div class="announcement">
+        <p>订单信息仅通过本次付款确认链接读取</p>
+        <a href="./products.html">继续浏览</a>
+      </div>
+
+      <header class="site-header">
+        <a class="brand" href="./index.html" aria-label="返回首页">
+          <span class="brand-mark">S</span>
+          <span class="brand-copy">
+            <strong>SinoHerb</strong>
+            <span>TCM wellness for overseas users</span>
+          </span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="./index.html">首页</a>
+          <a href="./products.html">产品</a>
+          <a href="./philosophy.html">理念</a>
+          <a href="./my-constitution.html">我的体质</a>
+          <a href="./about.html">关于我们</a>
+          <a class="cart-button" href="./cart.html"><span>Cart</span><span class="cart-button__badge">0</span></a>
+        </nav>
+      </header>
+
+      <main class="order-confirmation" id="orderConfirmation" aria-live="polite">
+        <span class="eyebrow">Payment confirmation</span>
+        <h1>正在确认付款…</h1>
+        <p>请稍候，我们正在读取这笔订单的有限确认信息。</p>
+      </main>
+    </div>
+    <script src="./frontend-api.js"></script>
+  </body>
+</html>

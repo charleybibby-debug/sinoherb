@@ -11,6 +11,13 @@ const adminMedia = (asset) => ({
   canRestore: Boolean(asset.backupPaths?.length),
 });
 
+const adminOrder = (order) => ({
+  ...order,
+  paymentMethod: order.paymentMethod || "manual",
+  paymentStatus: order.paymentStatus || "unpaid",
+  currencyCode: order.currencyCode || "USD",
+});
+
 export function registerAdminRoutes(app, { repository, config, modelConfig, llmProvider, verifyPassword, hashPassword }) {
   app.post("/api/v1/admin/auth/login", async (request, reply) => {
     const { username, password } = request.body || {};
@@ -108,14 +115,14 @@ export function registerAdminRoutes(app, { repository, config, modelConfig, llmP
     return { data: product };
   });
 
-  app.get("/api/v1/admin/orders", async () => ({ data: await repository.listOrders?.() || [] }));
+  app.get("/api/v1/admin/orders", async () => ({ data: (await repository.listOrders?.() || []).map(adminOrder) }));
 
   app.get("/api/v1/admin/users", async () => ({ data: (await repository.listUsers?.() || []).map(publicUser) }));
 
   app.get("/api/v1/admin/orders/:orderId", async (request) => {
     const order = await repository.getOrder(request.params.orderId);
     if (!order) throw notFound("订单不存在。");
-    return { data: order };
+    return { data: adminOrder(order) };
   });
 
   app.patch("/api/v1/admin/orders/:orderId/status", async (request) => {

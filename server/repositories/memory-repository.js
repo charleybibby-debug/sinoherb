@@ -13,6 +13,7 @@ export class MemoryRepository {
     this.constitutionResults = [];
     this.orders = new Map();
     this.orderItems = new Map();
+    this.paypalWebhookEvents = new Map();
     this.adminUsers = new Map();
     this.adminSessions = new Map();
     this.modelConfig = null;
@@ -227,17 +228,40 @@ export class MemoryRepository {
     return { ...saved };
   }
 
-  createOrder({ orderNumber, customer, lines, subtotalCents, cartId, userId = null }) {
+  createOrder({ orderNumber, customer, lines, subtotalCents, cartId, userId = null, status = "pending_contact", payment = {} }) {
+    const products = lines.map((line) => {
+      const product = this.products.find((item) => item.id === line.productId);
+      if (!product || product.status !== "active" || product.stockQuantity < line.quantity) throw new Error("product out of stock");
+      return { product, quantity: line.quantity };
+    });
+    for (const reserved of products) reserved.product.stockQuantity -= reserved.quantity;
+    const timestamp = Date.now();
     const order = {
       id: randomUUID(),
       orderNumber,
       cartId,
       userId,
-      status: "pending_contact",
-      ...customer,
+      status,
+      customerName: customer.name,
+      phone: customer.phone,
+      email: customer.email || null,
+      address: customer.address,
+      city: customer.city || "",
+      postalCode: customer.postalCode || "",
+      countryCode: customer.countryCode || "US",
+      notes: customer.notes || null,
       subtotalCents,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      paymentMethod: payment.method || "manual",
+      paymentStatus: payment.status || "unpaid",
+      currencyCode: payment.currencyCode || "USD",
+      paypalOrderId: null,
+      paypalCaptureId: null,
+      paidAt: null,
+      refundedAt: null,
+      stockReleasedAt: null,
+      confirmationTokenHash: payment.confirmationTokenHash || null,
+      createdAt: timestamp,
+      updatedAt: timestamp,
     };
     this.orders.set(order.id, order);
     this.orderItems.set(order.id, lines.map((line) => ({ id: randomUUID(), orderId: order.id, ...line })));
@@ -248,6 +272,107 @@ export class MemoryRepository {
     const order = this.orders.get(id);
     if (!order) return null;
     return { ...order, items: (this.orderItems.get(id) || []).map((item) => ({ ...item })) };
+  }
+
+  listOrders() {
+    return [...this.orders.values()]
+      .sort((first, second) => second.createdAt - first.createdAt)
+      .map((order) => this.getOrder(order.id));
+  }
+
+  getOrderByNumber(orderNumber) {
+    const order = [...this.orders.values()].find((item) => item.orderNumber === orderNumber);
+    return order ? this.getOrder(order.id) : null;
+  }
+
+  getOrderByPaypalOrderId(paypalOrderId) {
+    const order = [...this.orders.values()].find((item) => item.paypalOrderId === paypalOrderId);
+    return order ? this.getOrder(order.id) : null;
+  }
+
+  getOrderByPaypalCaptureId(paypalCaptureId) {
+    const order = [...this.orders.values()].find((item) => item.paypalCaptureId === paypalCaptureId);
+    return order ? this.getOrder(order.id) : null;
+  }
+
+  attachPaypalOrder(id, paypalOrderId) {
+    const order = this.orders.get(id);
+    if (!order) return null;
+    if (order.paypalOrderId && order.paypalOrderId !== paypalOrderId) throw new Error("PayPal order already attached");
+    order.paypalOrderId = paypalOrderId;
+    order.updatedAt = Date.now();
+    return this.getOrder(id);
+  }
+
+  markOrderPaid(id, { paypalCaptureId, paidAt }) {
+    const order = this.orders.get(id);
+    if (!order) return null;
+    if (order.paymentStatus === "paid") {
+      if (order.paypalCaptureId !== paypalCaptureId) throw new Error("PayPal capture conflict");
+      return this.getOrder(id);
+    }
+    order.paypalCaptureId = paypalCaptureId;
+    order.paymentStatus = "paid";
+    order.status = "pending_contact";
+    order.paidAt = paidAt;
+    order.updatedAt = paidAt;
+    return this.getOrder(id);
+  }
+
+  markOrderRefunded(id, refundedAt) {
+    const order = this.orders.get(id);
+    if (!order) return null;
+    order.paymentStatus = "refunded";
+    order.refundedAt ||= refundedAt;
+    order.updatedAt = refundedAt;
+    return this.getOrder(id);
+  }
+
+  markOrderPaymentFailed(id, timestamp) {
+    const order = this.orders.get(id);
+    if (!order || order.paymentStatus === "paid" || order.paymentStatus === "refunded") return order ? this.getOrder(id) : null;
+    order.paymentStatus = "failed";
+    order.updatedAt = timestamp;
+    return this.getOrder(id);
+  }
+
+  clearCartById(cartId) {
+    if (cartId) this.cartItems.set(cartId, []);
+  }
+
+  recordPaypalWebhookEvent(event) {
+    if (this.paypalWebhookEvents.has(event.eventId)) return false;
+    this.paypalWebhookEvents.set(event.eventId, { ...event, processingStatus: "processing", processedAt: null, errorCode: null });
+    return true;
+  }
+
+  completePaypalWebhookEvent(eventId, processingStatus, errorCode = null) {
+    const event = this.paypalWebhookEvents.get(eventId);
+    if (!event) return null;
+    Object.assign(event, { processingStatus, errorCode, processedAt: Date.now() });
+    return { ...event };
+  }
+
+  cancelPendingOrder(id, timestamp) {
+    const order = this.orders.get(id);
+    if (!order || order.paymentStatus === "paid" || order.paymentStatus === "refunded") return order ? this.getOrder(id) : null;
+    if (!order.stockReleasedAt) {
+      for (const line of this.orderItems.get(id) || []) {
+        const product = this.products.find((item) => item.id === line.productId);
+        if (product) product.stockQuantity += line.quantity;
+      }
+      order.stockReleasedAt = timestamp;
+    }
+    order.status = "cancelled";
+    order.paymentStatus = "failed";
+    order.updatedAt = timestamp;
+    return this.getOrder(id);
+  }
+
+  listExpiredPendingPaymentOrders(cutoff) {
+    return [...this.orders.values()]
+      .filter((order) => order.status === "pending_payment" && ["pending", "failed"].includes(order.paymentStatus) && order.createdAt < cutoff)
+      .map((order) => this.getOrder(order.id));
   }
 
   updateOrderStatus(id, status) {

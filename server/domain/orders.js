@@ -1,5 +1,6 @@
-const orderStatuses = ["pending_contact", "contacted", "confirmed", "completed", "cancelled"];
+const orderStatuses = ["pending_payment", "pending_contact", "contacted", "confirmed", "completed", "cancelled"];
 const transitions = {
+  pending_payment: ["pending_contact", "cancelled"],
   pending_contact: ["contacted", "cancelled"],
   contacted: ["confirmed", "cancelled"],
   confirmed: ["completed", "cancelled"],

@@ -17,4 +17,4 @@ COPY admin ./admin
 RUN mkdir -p /app/uploads && chown -R appuser:appuser /app
 USER appuser
 EXPOSE 3000
-CMD ["sh", "-c", "node server/scripts/migrate-media.js && node server/app.js"]
+CMD ["sh", "-c", "node server/scripts/migrate-media.js && node server/scripts/migrate-payments.js && node server/app.js"]

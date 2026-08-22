@@ -18,4 +18,7 @@ test("loadConfig uses typed values for a test environment", () => {
   assert.equal(config.mediaMaxBytes, 5 * 1024 * 1024);
   assert.equal(config.mediaBackupLimit, 10);
   assert.equal(config.configEncryptionKey.length, 64);
+  assert.equal(config.paypalEnv, "sandbox");
+  assert.equal(config.paypalCurrency, "USD");
+  assert.equal(config.paypalEnabled, false);
 });

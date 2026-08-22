@@ -19,5 +19,8 @@ test("calculates order lines from server product prices", () => {
 
 test("allows only valid forward order transitions", () => {
   assert.equal(transitionOrderStatus("pending_contact", "contacted"), "contacted");
+  assert.equal(transitionOrderStatus("pending_payment", "pending_contact"), "pending_contact");
+  assert.equal(transitionOrderStatus("pending_payment", "cancelled"), "cancelled");
+  assert.throws(() => transitionOrderStatus("pending_payment", "completed"));
   assert.throws(() => transitionOrderStatus("completed", "pending_contact"));
 });

@@ -1,6 +1,10 @@
 (function () {
   "use strict";
 
+  var paypalSdkPromise;
+  var paypalActions;
+  var activeCheckout;
+
   function escapeText(value) {
     return String(value == null ? "" : value).replace(/[&<>"']/g, function (character) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[character];
@@ -15,6 +19,143 @@
     var payload = await response.json().catch(function () { return {}; });
     if (!response.ok) throw new Error(payload.error && payload.error.message ? payload.error.message : "后台服务暂时不可用");
     return payload.data;
+  }
+
+  function checkoutCustomer(form) {
+    return Object.fromEntries(new FormData(form));
+  }
+
+  function validateCheckoutForm(form) {
+    return form.reportValidity();
+  }
+
+  function showCheckoutMessage(message, isError) {
+    var target = document.querySelector("#checkoutMessage");
+    if (!target) return;
+    target.textContent = message;
+    target.dataset.state = isError ? "error" : "success";
+  }
+
+  function setCheckoutBusy(form, busy) {
+    form.querySelectorAll("button").forEach(function (button) { button.disabled = busy; });
+    if (paypalActions) {
+      if (busy || !form.checkValidity()) paypalActions.disable();
+      else paypalActions.enable();
+    }
+    form.setAttribute("aria-busy", String(busy));
+  }
+
+  function loadPaypalSdk(clientId, currency) {
+    if (window.paypal) return Promise.resolve(window.paypal);
+    if (paypalSdkPromise) return paypalSdkPromise;
+    paypalSdkPromise = new Promise(function (resolve, reject) {
+      var script = document.createElement("script");
+      script.dataset.paypalSdk = "true";
+      script.src = "https://www.paypal.com/sdk/js?client-id=" + encodeURIComponent(clientId) + "&currency=" + encodeURIComponent(currency) + "&intent=capture&components=buttons&enable-funding=card";
+      script.onload = function () { resolve(window.paypal); };
+      script.onerror = function () {
+        script.remove();
+        paypalSdkPromise = null;
+        reject(new Error("PAYPAL_SDK_FAILED"));
+      };
+      document.head.appendChild(script);
+    });
+    return paypalSdkPromise;
+  }
+
+  async function submitManualOrder(form) {
+    if (!validateCheckoutForm(form)) return;
+    setCheckoutBusy(form, true);
+    try {
+      var order = await request("/orders", { method: "POST", body: JSON.stringify(checkoutCustomer(form)) });
+      showCheckoutMessage("订单 " + order.orderNumber + " 已提交，我们会联系你确认付款与配送。");
+      form.reset();
+    } catch (error) {
+      showCheckoutMessage(error.message, true);
+    } finally {
+      setCheckoutBusy(form, false);
+    }
+  }
+
+  function renderPaypalButtons(form) {
+    return window.paypal.Buttons({
+      style: { layout: "vertical", shape: "rect", label: "paypal" },
+      onInit: function (_, actions) {
+        paypalActions = actions;
+        actions.disable();
+        ["input", "change"].forEach(function (eventName) {
+          form.addEventListener(eventName, function () {
+            if (form.checkValidity()) actions.enable();
+            else actions.disable();
+          });
+        });
+      },
+      createOrder: async function () {
+        if (!validateCheckoutForm(form)) throw new Error("请先填写完整配送信息。");
+        setCheckoutBusy(form, true);
+        try {
+          activeCheckout = await request("/payments/paypal/orders", {
+            method: "POST",
+            body: JSON.stringify(checkoutCustomer(form)),
+          });
+          return activeCheckout.paypalOrderId;
+        } catch (error) {
+          showCheckoutMessage(error.message, true);
+          throw error;
+        } finally {
+          setCheckoutBusy(form, false);
+        }
+      },
+      onApprove: async function (data) {
+        setCheckoutBusy(form, true);
+        try {
+          var paid = await request("/payments/paypal/orders/" + encodeURIComponent(data.orderID) + "/capture", {
+            method: "POST",
+            body: JSON.stringify({ checkoutToken: activeCheckout && activeCheckout.checkoutToken }),
+          });
+          window.location.assign("./order-confirmation.html?order=" + encodeURIComponent(paid.orderNumber) + "&token=" + encodeURIComponent(activeCheckout.checkoutToken));
+        } catch (error) {
+          showCheckoutMessage(error.message, true);
+          setCheckoutBusy(form, false);
+        }
+      },
+      onCancel: function () {
+        setCheckoutBusy(form, false);
+        showCheckoutMessage("你已取消 PayPal 支付，购物车仍为你保留。");
+      },
+      onError: function () {
+        setCheckoutBusy(form, false);
+        showCheckoutMessage("PayPal 暂时无法完成付款，请重试或选择人工联系。", true);
+      },
+    }).render("#paypalButtons");
+  }
+
+  async function setupPaypal(form) {
+    var status = document.querySelector("#paypalStatus");
+    var retry = document.querySelector("#paypalRetry");
+    var card = document.querySelector("[data-payment-method='paypal']");
+    if (!status || !retry || !card) return;
+    status.textContent = "正在检查 PayPal 可用性…";
+    status.dataset.state = "loading";
+    retry.hidden = true;
+    try {
+      var config = await request("/payments/paypal/config");
+      if (!config.enabled) {
+        card.dataset.state = "disabled";
+        status.textContent = "PayPal 尚未启用，你仍可提交人工联系订单。";
+        status.dataset.state = "disabled";
+        return;
+      }
+      await loadPaypalSdk(config.clientId, config.currency);
+      if (!window.paypal || !window.paypal.Buttons) throw new Error("PAYPAL_SDK_FAILED");
+      status.textContent = "配送信息填写完整后即可使用 PayPal。";
+      status.dataset.state = "ready";
+      await renderPaypalButtons(form);
+    } catch (error) {
+      status.textContent = "PayPal 加载失败，请重试或选择人工联系。";
+      status.dataset.state = "error";
+      retry.hidden = false;
+    }
   }
 
   function renderCart(cart) {
@@ -89,33 +230,41 @@
     var cart = await request("/cart");
     var items = document.querySelector("#checkoutItems");
     var total = document.querySelector("#checkoutTotal strong");
+    var paypalAmount = document.querySelector("#paypalAmount");
     if (items) {
       items.innerHTML = cart.items.length ? cart.items.map(function (item) {
         return "<article class=\"checkout-summary__item\"><div class=\"checkout-summary__line\"><strong>" + escapeText(item.product.name) + " × " + item.quantity + "</strong><span>" + escapeText(item.lineTotal) + "</span></div><p>" + escapeText(item.product.category) + " · " + escapeText(item.product.constitutionType) + "</p></article>";
       }).join("") : "<p>购物车为空，请先选择产品。</p>";
     }
     if (total) total.textContent = cart.subtotal;
-    form.addEventListener("submit", async function (event) {
+    if (paypalAmount) paypalAmount.textContent = cart.subtotal + " USD";
+    form.addEventListener("submit", function (event) {
       event.preventDefault();
-      var data = new FormData(form);
-      var message = document.querySelector("#checkoutMessage");
-      try {
-        var order = await request("/orders", {
-          method: "POST",
-          body: JSON.stringify({
-            name: String(data.get("firstName") || "") + " " + String(data.get("lastName") || ""),
-            phone: data.get("phone"),
-            email: data.get("email"),
-            address: data.get("address"),
-            notes: data.get("notes"),
-          }),
-        });
-        if (message) message.textContent = "订单 " + order.orderNumber + " 已提交，我们会联系你确认付款与配送。";
-        form.reset();
-      } catch (error) {
-        if (message) message.textContent = error.message;
-      }
+      submitManualOrder(form);
     });
+    var retry = document.querySelector("#paypalRetry");
+    if (retry) retry.addEventListener("click", function () {
+      paypalSdkPromise = null;
+      var buttons = document.querySelector("#paypalButtons");
+      if (buttons) buttons.innerHTML = "";
+      setupPaypal(form);
+    });
+    await setupPaypal(form);
+  }
+
+  async function syncOrderConfirmation() {
+    var target = document.querySelector("#orderConfirmation");
+    if (!target) return;
+    var params = new URLSearchParams(window.location.search);
+    var orderNumber = params.get("order") || "";
+    var token = params.get("token") || "";
+    try {
+      var order = await request("/orders/" + encodeURIComponent(orderNumber) + "/confirmation?token=" + encodeURIComponent(token));
+      var paymentStatus = order.paymentStatus === "refunded" ? "已退款" : "已付款";
+      target.innerHTML = "<span class=\"eyebrow\">Payment complete</span><h1>付款已确认</h1><p>订单 " + escapeText(order.orderNumber) + " · " + escapeText(order.subtotal) + " USD</p><p>支付状态 " + paymentStatus + " · 交易参考号 " + escapeText(order.transactionReference || "—") + "</p><p>我们会继续确认配送安排，并通过你填写的联系方式与你联系。</p><a class=\"button button--primary\" href=\"./products.html\">继续浏览</a>";
+    } catch (error) {
+      target.innerHTML = "<span class=\"eyebrow\">Confirmation unavailable</span><h1>无法读取订单详情</h1><p>请检查链接，或联系 SinoHerb 支持。</p><a class=\"button\" href=\"./index.html\">返回首页</a>";
+    }
   }
 
   async function syncProductDetail() {
@@ -227,6 +376,7 @@
     try { await syncProducts(); } catch (error) {}
     try { await syncMedia(); } catch (error) {}
     try { await syncCheckout(); } catch (error) {}
+    try { await syncOrderConfirmation(); } catch (error) {}
     try { await syncProductDetail(); } catch (error) {}
     try { await setupChat(); } catch (error) {}
   }

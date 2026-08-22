@@ -1,6 +1,19 @@
 import { createHash } from "node:crypto";
 
 const tokenHash = (token) => createHash("sha256").update(token).digest("hex");
+const orderColumns = `id, order_number AS "orderNumber", cart_id AS "cartId", user_id AS "userId", status,
+  customer_name AS "customerName", phone, email, address, city, postal_code AS "postalCode", country_code AS "countryCode", notes,
+  subtotal_cents AS "subtotalCents", payment_method AS "paymentMethod", payment_status AS "paymentStatus", currency_code AS "currencyCode",
+  paypal_order_id AS "paypalOrderId", paypal_capture_id AS "paypalCaptureId", paid_at AS "paidAt", refunded_at AS "refundedAt",
+  stock_released_at AS "stockReleasedAt", confirmation_token_hash AS "confirmationTokenHash", created_at AS "createdAt", updated_at AS "updatedAt"`;
+
+async function loadOrder(queryable, id) {
+  const orderResult = await queryable.query(`SELECT ${orderColumns} FROM orders WHERE id = $1 LIMIT 1`, [id]);
+  const order = orderResult.rows[0];
+  if (!order) return null;
+  const items = await queryable.query("SELECT id, product_id AS \"productId\", product_slug AS \"productSlug\", product_name AS \"productName\", unit_price_cents AS \"unitPriceCents\", quantity, line_total_cents AS \"lineTotalCents\" FROM order_items WHERE order_id = $1", [id]);
+  return { ...order, items: items.rows };
+}
 
 export class PostgresRepository {
   constructor(pool) {
@@ -280,16 +293,129 @@ export class PostgresRepository {
   }
 
   async listOrders() {
-    const result = await this.pool.query("SELECT id, order_number AS \"orderNumber\", user_id AS \"userId\", status, customer_name AS \"customerName\", phone, email, address, notes, subtotal_cents AS \"subtotalCents\", created_at AS \"createdAt\", updated_at AS \"updatedAt\" FROM orders ORDER BY created_at DESC LIMIT 200");
+    const result = await this.pool.query(`SELECT ${orderColumns} FROM orders ORDER BY created_at DESC LIMIT 200`);
     return result.rows;
   }
 
   async getOrder(id) {
-    const orderResult = await this.pool.query("SELECT id, order_number AS \"orderNumber\", user_id AS \"userId\", status, customer_name AS \"customerName\", phone, email, address, notes, subtotal_cents AS \"subtotalCents\", created_at AS \"createdAt\", updated_at AS \"updatedAt\" FROM orders WHERE id = $1 LIMIT 1", [id]);
-    const order = orderResult.rows[0];
+    return loadOrder(this.pool, id);
+  }
+
+  async getOrderByNumber(orderNumber) {
+    const result = await this.pool.query("SELECT id FROM orders WHERE order_number = $1 LIMIT 1", [orderNumber]);
+    return result.rows[0] ? this.getOrder(result.rows[0].id) : null;
+  }
+
+  async getOrderByPaypalOrderId(paypalOrderId) {
+    const result = await this.pool.query("SELECT id FROM orders WHERE paypal_order_id = $1 LIMIT 1", [paypalOrderId]);
+    return result.rows[0] ? this.getOrder(result.rows[0].id) : null;
+  }
+
+  async getOrderByPaypalCaptureId(paypalCaptureId) {
+    const result = await this.pool.query("SELECT id FROM orders WHERE paypal_capture_id = $1 LIMIT 1", [paypalCaptureId]);
+    return result.rows[0] ? this.getOrder(result.rows[0].id) : null;
+  }
+
+  async attachPaypalOrder(id, paypalOrderId) {
+    const result = await this.pool.query(
+      `UPDATE orders SET paypal_order_id = $2, updated_at = NOW()
+       WHERE id = $1 AND (paypal_order_id IS NULL OR paypal_order_id = $2)
+       RETURNING ${orderColumns}`,
+      [id, paypalOrderId],
+    );
+    if (result.rows[0]) return result.rows[0];
+    const order = await this.getOrder(id);
     if (!order) return null;
-    const items = await this.pool.query("SELECT id, product_id AS \"productId\", product_slug AS \"productSlug\", product_name AS \"productName\", unit_price_cents AS \"unitPriceCents\", quantity, line_total_cents AS \"lineTotalCents\" FROM order_items WHERE order_id = $1", [id]);
-    return { ...order, items: items.rows };
+    throw new Error("PayPal order already attached");
+  }
+
+  async markOrderPaid(id, { paypalCaptureId, paidAt }) {
+    const result = await this.pool.query(
+      `UPDATE orders
+       SET paypal_capture_id = $2, payment_status = 'paid', status = 'pending_contact', paid_at = $3, updated_at = $3
+       WHERE id = $1 AND payment_status = 'pending'
+       RETURNING ${orderColumns}`,
+      [id, paypalCaptureId, paidAt],
+    );
+    if (result.rows[0]) return result.rows[0];
+    const order = await this.getOrder(id);
+    if (!order) return null;
+    if (order.paymentStatus === "paid" && order.paypalCaptureId === paypalCaptureId) return order;
+    throw new Error("PayPal capture conflict");
+  }
+
+  async markOrderRefunded(id, refundedAt) {
+    const result = await this.pool.query(
+      `UPDATE orders SET payment_status = 'refunded', refunded_at = COALESCE(refunded_at, $2), updated_at = $2
+       WHERE id = $1 AND payment_status IN ('paid', 'refunded') RETURNING ${orderColumns}`,
+      [id, refundedAt],
+    );
+    return result.rows[0] || null;
+  }
+
+  async markOrderPaymentFailed(id, timestamp) {
+    const result = await this.pool.query(
+      `UPDATE orders SET payment_status = 'failed', updated_at = $2
+       WHERE id = $1 AND payment_status NOT IN ('paid', 'refunded') RETURNING ${orderColumns}`,
+      [id, timestamp],
+    );
+    return result.rows[0] || this.getOrder(id);
+  }
+
+  async clearCartById(cartId) {
+    if (cartId) await this.pool.query("DELETE FROM cart_items WHERE cart_id = $1", [cartId]);
+  }
+
+  async recordPaypalWebhookEvent({ eventId, eventType, resourceId = null }) {
+    const result = await this.pool.query(
+      "INSERT INTO paypal_webhook_events (event_id, event_type, resource_id, processing_status) VALUES ($1, $2, $3, 'processing') ON CONFLICT (event_id) DO NOTHING RETURNING event_id",
+      [eventId, eventType, resourceId],
+    );
+    return result.rowCount === 1;
+  }
+
+  async completePaypalWebhookEvent(eventId, processingStatus, errorCode = null) {
+    const result = await this.pool.query(
+      "UPDATE paypal_webhook_events SET processing_status = $2, error_code = $3, processed_at = NOW() WHERE event_id = $1 RETURNING event_id AS \"eventId\", event_type AS \"eventType\", resource_id AS \"resourceId\", processing_status AS \"processingStatus\", error_code AS \"errorCode\", processed_at AS \"processedAt\"",
+      [eventId, processingStatus, errorCode],
+    );
+    return result.rows[0] || null;
+  }
+
+  async cancelPendingOrder(id, timestamp) {
+    const client = await this.pool.connect();
+    try {
+      await client.query("BEGIN");
+      const lockedResult = await client.query("SELECT payment_status AS \"paymentStatus\", stock_released_at AS \"stockReleasedAt\" FROM orders WHERE id = $1 FOR UPDATE", [id]);
+      const lockedOrder = lockedResult.rows[0];
+      if (!lockedOrder || lockedOrder.paymentStatus === "paid" || lockedOrder.paymentStatus === "refunded" || lockedOrder.stockReleasedAt) {
+        await client.query("COMMIT");
+        return lockedOrder ? loadOrder(client, id) : null;
+      }
+      await client.query(
+        "UPDATE products p SET stock_quantity = p.stock_quantity + oi.quantity, updated_at = NOW() FROM order_items oi WHERE oi.order_id = $1 AND oi.product_id = p.id",
+        [id],
+      );
+      await client.query(
+        "UPDATE orders SET status = 'cancelled', payment_status = 'failed', stock_released_at = $2, updated_at = $2 WHERE id = $1 AND stock_released_at IS NULL",
+        [id, timestamp],
+      );
+      await client.query("COMMIT");
+      return loadOrder(client, id);
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  async listExpiredPendingPaymentOrders(cutoff) {
+    const result = await this.pool.query(
+      `SELECT ${orderColumns} FROM orders WHERE status = 'pending_payment' AND payment_status IN ('pending', 'failed') AND created_at < $1 ORDER BY created_at ASC`,
+      [cutoff],
+    );
+    return result.rows;
   }
 
   async updateOrderStatus(id, status) {
@@ -303,7 +429,7 @@ export class PostgresRepository {
     return { sessions: sessions.rowCount, carts: carts.rowCount };
   }
 
-  async createOrder({ orderNumber, customer, lines, subtotalCents, cartId, userId = null }) {
+  async createOrder({ orderNumber, customer, lines, subtotalCents, cartId, userId = null, status = "pending_contact", payment = {} }) {
     const client = await this.pool.connect();
     try {
       await client.query("BEGIN");
@@ -315,8 +441,30 @@ export class PostgresRepository {
         if (result.rowCount !== 1) throw new Error("product out of stock");
       }
       const orderResult = await client.query(
-        "INSERT INTO orders (order_number, cart_id, user_id, status, customer_name, phone, email, address, notes, subtotal_cents) VALUES ($1, $2, $3, 'pending_contact', $4, $5, $6, $7, $8, $9) RETURNING id, order_number AS \"orderNumber\", user_id AS \"userId\", status, subtotal_cents AS \"subtotalCents\"",
-        [orderNumber, cartId, userId, customer.name, customer.phone, customer.email || null, customer.address, customer.notes || null, subtotalCents],
+        `INSERT INTO orders (
+          order_number, cart_id, user_id, status, customer_name, phone, email, address, city, postal_code, country_code, notes,
+          subtotal_cents, payment_method, payment_status, currency_code, confirmation_token_hash
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+        RETURNING ${orderColumns}`,
+        [
+          orderNumber,
+          cartId,
+          userId,
+          status,
+          customer.name,
+          customer.phone,
+          customer.email || null,
+          customer.address,
+          customer.city || "",
+          customer.postalCode || "",
+          customer.countryCode || "US",
+          customer.notes || null,
+          subtotalCents,
+          payment.method || "manual",
+          payment.status || "unpaid",
+          payment.currencyCode || "USD",
+          payment.confirmationTokenHash || null,
+        ],
       );
       const order = orderResult.rows[0];
       for (const line of lines) {

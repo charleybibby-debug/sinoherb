@@ -9,9 +9,13 @@ const numberFromEnv = (env, key, fallback, { min = 0, max = Number.MAX_SAFE_INTE
 export function loadConfig(env = process.env) {
   const nodeEnv = env.NODE_ENV || "development";
   const sessionSecret = env.SESSION_SECRET || "";
+  const paypalEnv = env.PAYPAL_ENV || "sandbox";
   if (nodeEnv === "production" && sessionSecret.length < 32) {
     throw new Error("SESSION_SECRET must contain at least 32 characters in production");
   }
+  if (!["sandbox", "live"].includes(paypalEnv)) throw new Error("PAYPAL_ENV must be sandbox or live");
+  const paypalClientId = env.PAYPAL_CLIENT_ID || "";
+  const paypalClientSecret = env.PAYPAL_CLIENT_SECRET || "";
 
   return {
     nodeEnv,
@@ -32,6 +36,13 @@ export function loadConfig(env = process.env) {
     mediaUploadDir: env.MEDIA_UPLOAD_DIR || "/app/uploads",
     mediaMaxBytes: numberFromEnv(env, "MEDIA_MAX_BYTES", 5 * 1024 * 1024, { min: 1024, max: 25 * 1024 * 1024 }),
     mediaBackupLimit: numberFromEnv(env, "MEDIA_BACKUP_LIMIT", 10, { min: 1, max: 50 }),
+    paypalEnv,
+    paypalClientId,
+    paypalClientSecret,
+    paypalWebhookId: env.PAYPAL_WEBHOOK_ID || "",
+    paypalCurrency: "USD",
+    paypalTimeoutMs: numberFromEnv(env, "PAYPAL_TIMEOUT_MS", 15000, { min: 1000, max: 60000 }),
+    paypalEnabled: Boolean(paypalClientId && paypalClientSecret),
     useMemoryRepository: env.USE_MEMORY_REPOSITORY === "true",
   };
 }

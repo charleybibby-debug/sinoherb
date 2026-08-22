@@ -46,12 +46,12 @@
         <span class="eyebrow">结算页 / checkout</span>
         <h1>确认你的方案，再完成下单。</h1>
         <p class="lead">
-          提交订单后，我们会人工联系你确认付款与配送。
+          可使用 PayPal 安全完成 USD 在线支付，也可先提交订单，稍后联系确认。
         </p>
       </section>
 
       <div class="checkout-layout">
-          <form class="checkout-form" id="checkoutForm">
+        <form class="checkout-form" id="checkoutForm">
           <div>
             <span class="eyebrow">Shipping</span>
             <h2>配送信息</h2>
@@ -72,11 +72,11 @@
             </label>
             <label class="checkout-field">
               <span>Country / Region</span>
-              <select>
-                <option>United States</option>
-                <option>United Kingdom</option>
-                <option>Canada</option>
-                <option>Australia</option>
+              <select name="countryCode" required>
+                <option value="US">United States</option>
+                <option value="GB">United Kingdom</option>
+                <option value="CA">Canada</option>
+                <option value="AU">Australia</option>
               </select>
             </label>
             <label class="checkout-field">
@@ -93,11 +93,11 @@
           <div class="checkout-grid">
             <label class="checkout-field">
               <span>City</span>
-              <input type="text" placeholder="Los Angeles" />
+              <input type="text" name="city" placeholder="Los Angeles" required />
             </label>
             <label class="checkout-field">
               <span>Postal code</span>
-              <input type="text" placeholder="90001" />
+              <input type="text" name="postalCode" placeholder="90001" required />
             </label>
           </div>
 
@@ -106,8 +106,29 @@
               <textarea name="notes" placeholder="Any delivery notes or health considerations..."></textarea>
           </label>
 
-          <button class="button button--primary" type="submit">提交待联系订单</button>
-          <p id="checkoutMessage" role="status"></p>
+          <section class="checkout-payment" aria-labelledby="paymentHeading">
+            <div>
+              <span class="eyebrow">Complete order</span>
+              <h2 id="paymentHeading">完成订单</h2>
+            </div>
+            <article class="checkout-payment__card checkout-payment__card--paypal" data-payment-method="paypal">
+              <div class="checkout-payment__heading">
+                <strong>推荐 · PayPal 在线支付</strong>
+                <span id="paypalAmount">$0.00 USD</span>
+              </div>
+              <p>在 PayPal 安全页面付款；符合条件时可使用银行卡。</p>
+              <p id="paypalStatus" class="checkout-payment__status" role="status" aria-live="polite">正在检查 PayPal 可用性…</p>
+              <div id="paypalButtons" aria-live="polite"></div>
+              <button type="button" class="button" id="paypalRetry" hidden>重新加载 PayPal</button>
+            </article>
+            <div class="checkout-payment__or"><span>或</span></div>
+            <article class="checkout-payment__card" data-payment-method="manual">
+              <strong>先提交订单，稍后联系确认</strong>
+              <p>暂不在线付款，我们会联系你确认付款与配送。</p>
+              <button class="button button--primary" type="submit">提交人工联系订单</button>
+            </article>
+            <p id="checkoutMessage" role="status" aria-live="polite"></p>
+          </section>
         </form>
 
         <aside class="checkout-summary">
@@ -123,7 +144,7 @@
             <strong>$0.00</strong>
           </div>
 
-          <p class="lead">首期订单提交后由工作人员联系确认，不在线收款。</p>
+          <p class="lead">订单金额以 USD 结算；在线支付金额由服务器根据当前商品价格重新计算。</p>
         </aside>
       </div>
     </div>

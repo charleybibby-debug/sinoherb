@@ -1,5 +1,6 @@
 import { randomBytes } from "node:crypto";
 import { calculateOrderLines } from "../domain/orders.js";
+import { validateCheckoutCustomer } from "../domain/payments.js";
 import { badRequest, notFound } from "../http-errors.js";
 import { createToken, hashToken } from "../auth.js";
 import { publicMediaUrl } from "../media-storage.js";
@@ -161,8 +162,12 @@ export function registerPublicRoutes(app, { repository, chatService, auth, confi
   });
 
   app.post("/api/v1/orders", async (request, reply) => {
-    const body = request.body || {};
-    if (!body.name || !body.phone || !body.address) throw badRequest("INVALID_CUSTOMER", "请填写姓名、电话和地址。");
+    let customer;
+    try {
+      customer = validateCheckoutCustomer(request.body || {});
+    } catch (error) {
+      throw badRequest("INVALID_CUSTOMER", error.message);
+    }
     const token = auth.ensureVisitorToken(reply, request);
     const cart = await repository.getCart(token);
     if (!cart?.items.length) throw badRequest("EMPTY_CART", "购物车为空。");
@@ -174,7 +179,9 @@ export function registerPublicRoutes(app, { repository, chatService, auth, confi
       orderNumber,
       cartId: cart.id,
       userId: request.user?.id || null,
-      customer: { name: body.name.trim(), phone: body.phone.trim(), email: body.email?.trim(), address: body.address.trim(), notes: body.notes?.trim() },
+      status: "pending_contact",
+      payment: { method: "manual", status: "unpaid", currencyCode: "USD" },
+      customer: { ...customer, name: `${customer.firstName} ${customer.lastName}` },
       lines,
       subtotalCents,
     });

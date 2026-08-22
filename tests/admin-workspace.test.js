@@ -18,5 +18,7 @@ test("admin workspace exposes the desktop navigation and six views", async () =>
   assert.match(script, /测试模型联通性/);
   assert.match(script, /admin-model-form__label/);
   assert.match(script, /admin-model-form__hint/);
+  assert.match(script, /paymentMethodLabel/);
+  assert.match(script, /paymentStatusLabel/);
   assert.match(script, /\/admin\/users/);
 });
