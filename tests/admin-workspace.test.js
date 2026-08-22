@@ -14,5 +14,9 @@ test("admin workspace exposes the desktop navigation and six views", async () =>
   const script = await readFile(new URL("../admin/admin.js", import.meta.url), "utf8");
   assert.match(script, /adminModelConfigForm/);
   assert.match(script, /\/admin\/model-config/);
+  assert.match(script, /\/admin\/model-config\/test/);
+  assert.match(script, /测试模型联通性/);
+  assert.match(script, /admin-model-form__label/);
+  assert.match(script, /admin-model-form__hint/);
   assert.match(script, /\/admin\/users/);
 });

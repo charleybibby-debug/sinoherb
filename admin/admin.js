@@ -208,13 +208,25 @@ function renderModel(model) {
   document.querySelector("#adminModelHealth").innerHTML = `<div class="admin-model-grid">
     <article class="admin-model-card admin-model-card--primary"><div class="admin-model-card__icon">✦</div><div><p class="admin-overline">Provider</p><h3>${configured ? "阿里云百炼" : "本地降级规则"}</h3><p>${configured ? "大模型服务已连接，可用于体质对话。" : "未配置大模型密钥，当前由本地规则保障基础体验。"}</p></div><span class="admin-model-state ${configured ? "is-ready" : "is-fallback"}"><i></i>${configured ? "已连接" : "降级中"}</span></article>
     <article class="admin-model-card"><p class="admin-overline">Current route</p><h3>${configured ? escapeText(model?.model || "云端模型") : "Local Constitution Rules"}</h3><dl><div><dt>对话服务</dt><dd>${configured ? "云端模型" : "本地规则"}</dd></div><div><dt>状态检查</dt><dd>${configured ? "正常" : "可用"}</dd></div><div><dt>切换策略</dt><dd>自动降级</dd></div></dl></article>
-    <article class="admin-model-card admin-model-config"><div class="admin-model-config__heading"><div><p class="admin-overline">Runtime settings</p><h3>模型接入配置</h3><p>保存后立即应用到下一次体质对话。API Key 只保存加密密文。</p></div><span class="admin-model-config__updated">${model?.updatedAt ? `最近更新 ${dateLabel(model.updatedAt)}` : "当前使用环境变量"}</span></div>${model?.canPersist === false ? "<p class=\"admin-model-config__warning\">服务器尚未配置 CONFIG_ENCRYPTION_KEY，暂时不能保存数据库配置。</p>" : ""}<form id="adminModelConfigForm" class="admin-model-form"><div class="admin-model-form__grid"><label>服务地址<input name="baseUrl" value="${escapeText(model?.baseUrl || "")}" autocomplete="url" required /></label><label>模型名称<input name="model" value="${escapeText(model?.model || "")}" autocomplete="off" required /></label><label class="admin-model-form__key">API Key<input name="apiKey" type="password" autocomplete="new-password" placeholder="${model?.hasApiKey ? `当前：${escapeText(model.maskedApiKey)}` : "请输入新的 API Key"}" /><span>${model?.hasApiKey ? "留空表示保留当前密钥" : "保存后将加密写入数据库"}</span></label></div><div class="admin-model-form__actions"><button class="admin-button admin-button--primary" type="submit"${model?.canPersist === false ? " disabled" : ""}>保存配置</button><p class="admin-model-config__message" data-model-config-message></p></div></form></article>
+    <article class="admin-model-card admin-model-config"><div class="admin-model-config__heading"><div><p class="admin-overline">Runtime settings</p><h3>模型接入配置</h3><p>保存后立即应用到下一次体质对话。API Key 只保存加密密文。</p></div><span class="admin-model-config__updated">${model?.updatedAt ? `最近更新 ${dateLabel(model.updatedAt)}` : "当前使用环境变量"}</span></div>${model?.canPersist === false ? "<p class=\"admin-model-config__warning\">服务器尚未配置 CONFIG_ENCRYPTION_KEY，暂时不能保存数据库配置。</p>" : ""}<form id="adminModelConfigForm" class="admin-model-form"><div class="admin-model-form__grid"><label><span class="admin-model-form__label">服务地址</span><input name="baseUrl" value="${escapeText(model?.baseUrl || "")}" autocomplete="url" required /></label><label><span class="admin-model-form__label">模型名称</span><input name="model" value="${escapeText(model?.model || "")}" autocomplete="off" required /></label><label class="admin-model-form__key"><span class="admin-model-form__label">API Key</span><input name="apiKey" type="password" autocomplete="new-password" placeholder="${model?.hasApiKey ? `当前：${escapeText(model.maskedApiKey)}` : "请输入新的 API Key"}" /><span class="admin-model-form__hint">${model?.hasApiKey ? "留空表示保留当前密钥" : "保存后将加密写入数据库"}</span></label></div><div class="admin-model-form__actions"><button class="admin-button admin-button--primary" type="button" data-model-test>测试模型联通性</button><button class="admin-button admin-button--primary" type="submit"${model?.canPersist === false ? " disabled" : ""}>保存配置</button><p class="admin-model-config__message" data-model-config-message></p></div></form></article>
   </div>`;
-  document.querySelector("#adminModelConfigForm").addEventListener("submit", async (event) => {
+  const form = document.querySelector("#adminModelConfigForm");
+  const message = form.querySelector("[data-model-config-message]");
+  form.querySelector("[data-model-test]").addEventListener("click", async (event) => {
+    const button = event.currentTarget;
+    const patch = Object.fromEntries(new FormData(form));
+    if (!patch.apiKey) delete patch.apiKey;
+    button.disabled = true;
+    message.textContent = "测试中…";
+    try {
+      const result = await request("/admin/model-config/test", { method: "POST", body: JSON.stringify(patch) });
+      message.textContent = `连接成功 · ${result.model || "未知模型"} · ${result.latencyMs}ms`;
+    } catch (error) { message.textContent = error.message; }
+    finally { button.disabled = false; }
+  });
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const form = event.currentTarget;
     const submitButton = form.querySelector("button[type=submit]");
-    const message = form.querySelector("[data-model-config-message]");
     const patch = Object.fromEntries(new FormData(form));
     if (!patch.apiKey) delete patch.apiKey;
     submitButton.disabled = true;

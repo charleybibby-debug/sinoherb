@@ -258,12 +258,14 @@ body.admin-page {
 .admin-model-config__updated { color: var(--admin-muted); font-size: .7rem; white-space: nowrap; }
 .admin-model-config__warning { margin: 17px 0 0; color: var(--admin-red) !important; font-size: .74rem !important; }
 .admin-model-form { margin-top: 22px; }
-.admin-model-form__grid { display: grid; grid-template-columns: 1.4fr .8fr 1fr; gap: 15px; }
-.admin-model-form label { display: grid; gap: 7px; color: var(--admin-muted); font-size: .7rem; font-weight: 750; }
+.admin-model-form__grid { display: grid; grid-template-columns: 1.4fr .8fr 1fr; gap: 15px; align-items: start; }
+.admin-model-form label { display: grid; grid-template-rows: 14px 39px auto; align-content: start; gap: 7px; }
+.admin-model-form__label { color: var(--admin-muted); font-size: .7rem; font-weight: 750; line-height: 14px; }
 .admin-model-form input { min-height: 39px; padding: 0 10px; border: 1px solid var(--admin-line); border-radius: 2px; background: #fff; color: var(--admin-ink); font-size: .77rem; }
 .admin-model-form input:focus { border-color: var(--admin-green); outline: 2px solid rgba(83, 116, 93, .14); }
-.admin-model-form label span { color: var(--admin-muted); font-size: .65rem; font-weight: 500; }
+.admin-model-form__hint { color: var(--admin-muted); font-size: .65rem; font-weight: 500; }
 .admin-model-form__actions { display: flex; align-items: center; gap: 14px; margin-top: 17px; }
+.admin-model-form__actions .admin-button { flex: 0 0 auto; }
 .admin-model-config__message { min-height: 17px; margin: 0; color: var(--admin-muted); font-size: .72rem; }
 
 .admin-empty { margin: 0; padding: 24px 0; color: var(--admin-muted); font-size: .78rem; }

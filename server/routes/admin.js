@@ -11,7 +11,7 @@ const adminMedia = (asset) => ({
   canRestore: Boolean(asset.backupPaths?.length),
 });
 
-export function registerAdminRoutes(app, { repository, config, modelConfig, verifyPassword, hashPassword }) {
+export function registerAdminRoutes(app, { repository, config, modelConfig, llmProvider, verifyPassword, hashPassword }) {
   app.post("/api/v1/admin/auth/login", async (request, reply) => {
     const { username, password } = request.body || {};
     const user = await repository.getAdminByUsername?.(username || "");
@@ -134,6 +134,23 @@ export function registerAdminRoutes(app, { repository, config, modelConfig, veri
       return { data: await modelConfig.update(request.body || {}, request.adminUser?.id) };
     } catch (error) {
       throw badRequest("INVALID_MODEL_CONFIG", error.message);
+    }
+  });
+
+  app.post("/api/v1/admin/model-config/test", async (request, reply) => {
+    if (!modelConfig && !llmProvider?.testConnection) throw badRequest("MODEL_CONFIG_UNAVAILABLE", "模型配置服务不可用。");
+    try {
+      const result = modelConfig?.testConnection ? await modelConfig.testConnection(request.body || {}) : await llmProvider.testConnection();
+      return { data: { ok: true, model: result.model, latencyMs: result.latencyMs } };
+    } catch (error) {
+      const messages = {
+        LLM_NOT_CONFIGURED: "请先填写 API Key。",
+        LLM_TIMEOUT: "模型连接超时，请检查服务地址或网络。",
+        LLM_PROVIDER_ERROR: "模型服务拒绝了请求，请检查模型名称和 API Key。",
+        LLM_EMPTY_RESPONSE: "模型服务未返回有效内容。",
+        LLM_UNAVAILABLE: "模型服务暂时不可用，请检查服务地址和网络。",
+      };
+      return reply.code(502).send({ error: { code: "MODEL_CONNECTION_FAILED", message: messages[error.code] || error.message || "模型连接失败，请检查配置。" } });
     }
   });
 

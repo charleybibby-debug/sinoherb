@@ -1,4 +1,5 @@
 import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
+import { createLlmProvider } from "./llm/provider.js";
 
 const algorithm = "aes-256-gcm";
 const keyPattern = /^[0-9a-f]{64}$/i;
@@ -55,7 +56,7 @@ export function validateModelConfigPatch(patch = {}) {
   return normalized;
 }
 
-export function createModelConfigService({ repository, envConfig }) {
+export function createModelConfigService({ repository, envConfig, providerFactory = createLlmProvider }) {
   let runtime = {
     provider: "bailian",
     llmBaseUrl: envConfig.llmBaseUrl,
@@ -80,6 +81,19 @@ export function createModelConfigService({ repository, envConfig }) {
       return this.publicState();
     },
     getRuntimeConfig() { return { ...runtime }; },
+    async testConnection(patch = {}) {
+      const normalized = Object.keys(patch).length ? validateModelConfigPatch(patch) : {};
+      const candidate = {
+        llmBaseUrl: normalized.baseUrl || runtime.llmBaseUrl,
+        llmModel: normalized.model || runtime.llmModel,
+        llmApiKey: normalized.apiKey || runtime.llmApiKey,
+        llmTimeoutMs: envConfig.llmTimeoutMs,
+        llmMaxOutputTokens: Math.min(envConfig.llmMaxOutputTokens, 100),
+      };
+      const provider = providerFactory(candidate);
+      if (!provider) throw new Error("模型 API Key 未配置。");
+      return provider.testConnection();
+    },
     publicState() {
       return { configured: Boolean(runtime.llmApiKey), provider: runtime.provider, baseUrl: runtime.llmBaseUrl, model: runtime.llmModel, hasApiKey: Boolean(runtime.llmApiKey), maskedApiKey: maskApiKey(runtime.llmApiKey), source: runtime.source, updatedAt: runtime.updatedAt, canPersist: Boolean(envConfig.configEncryptionKey) };
     },

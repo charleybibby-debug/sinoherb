@@ -18,6 +18,17 @@ export function createLlmProvider(config, fetchImpl = fetch) {
       const runtimeConfig = isDynamic ? config.getRuntimeConfig() : config;
       return runtimeConfig.llmModel || "unknown";
     },
+    async testConnection() {
+      const startedAt = Date.now();
+      const result = await this.complete({
+        messages: [
+          { role: "system", content: "你是模型连接测试助手。" },
+          { role: "user", content: '这是一条连接测试，请只返回 JSON：{"ok":true}' },
+        ],
+        responseFormat: "json_object",
+      });
+      return { model: result.model, latencyMs: Date.now() - startedAt };
+    },
     async complete({ messages, responseFormat = "json_object" }) {
       const runtimeConfig = isDynamic ? config.getRuntimeConfig() : config;
       if (!runtimeConfig.llmApiKey) throw new LlmProviderError("model provider is not configured", "LLM_NOT_CONFIGURED");

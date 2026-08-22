@@ -23,7 +23,7 @@ function createRepository(config) {
 
 export function buildApp({ config = loadConfig(), logger = false, repository = createRepository(config), provider } = {}) {
   const app = Fastify({ logger });
-  const modelConfig = createModelConfigService({ repository, envConfig: config });
+  const modelConfig = createModelConfigService({ repository, envConfig: config, providerFactory: provider ? () => provider : createLlmProvider });
   const llmProvider = provider || createLlmProvider(modelConfig);
   app.register(cookie);
   app.register(formbody);
@@ -39,6 +39,7 @@ export function buildApp({ config = loadConfig(), logger = false, repository = c
     repository,
     config,
     modelConfig,
+    llmProvider,
     verifyPassword,
     hashPassword,
   });
